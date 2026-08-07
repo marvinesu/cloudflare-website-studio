@@ -1,5 +1,7 @@
 # Human content and SEO playbook
 
+For any local-service business, also read [local-service-growth.md](local-service-growth.md) and run its research, location-page, internal-link, and AI-discovery workflow before finalizing pages.
+
 ## Start with evidence
 
 Collect verified source material before writing:
@@ -86,6 +88,8 @@ Target good Core Web Vitals: LCP <= 2.5s, INP <= 200ms, CLS <= 0.1 at the 75th p
 - Validate schema with official tooling and check live canonical behavior.
 - Confirm preview deployments return `X-Robots-Tag: noindex` or equivalent.
 - After launch, monitor index coverage, crawl errors, Core Web Vitals, query/page performance, and unexpected canonical selection.
+- Verify public pages are accessible to the search/AI crawlers the owner intends to allow; test robots.txt and Cloudflare bot/WAF behavior separately from browser access.
+- Track AI referrals when identifiable, but do not promise inclusion, ranking, citation, or generated-answer placement.
 
 ## Official references
 

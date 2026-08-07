@@ -18,6 +18,11 @@
 - Redirects are specific, single-hop where practical, and loop-free
 - Unknown routes return an intentional 404/410
 - Preview URLs are non-indexable
+- Local-service projects include a reviewed keyword-to-page map, question bank, qualified location-page table, and internal-link matrix
+- Location pages contain unique local utility/proof and do not form thin service-city combinations
+- Every important page has at least one crawlable contextual inbound link
+- Intended AI/search crawlers are not accidentally blocked by robots.txt, Cloudflare WAF/bot rules, authentication, or JavaScript challenges
+- OAI-SearchBot and GPTBot policies are decided separately; IndexNow/AI discovery is never reported as a ranking or citation guarantee
 
 ## Visual and responsive
 

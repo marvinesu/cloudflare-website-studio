@@ -79,10 +79,18 @@ def main() -> int:
     files = list(source_files(root))
     corpus = "\n".join(read_text(p) for p in files)
     lower = corpus.lower()
+    robots_text = "\n".join(read_text(p) for p in robots).lower()
     check("title", "<title" in lower or "title:" in lower or "title=" in lower, "page title implementation found")
     check("description", "description" in lower, "meta description implementation found")
     check("canonical", "canonical" in lower, "canonical URL implementation found")
     check("structured-data", "application/ld+json" in lower or "schema.org" in lower, "structured data implementation found")
+    check("local-business-entity", "localbusiness" in lower or "organization" in lower, "Organization/LocalBusiness entity markup found when applicable")
+    crawlable_links = len(re.findall(r"<a\s+[^>]*href\s*=", corpus, re.I))
+    check("crawlable-internal-links", crawlable_links > 0, f"found {crawlable_links} crawlable anchor implementation(s)")
+
+    oai_blocked = bool(re.search(r"user-agent\s*:\s*oai-searchbot[\s\S]{0,300}?disallow\s*:\s*/", robots_text, re.I))
+    check("oai-searchbot", not oai_blocked, "OAI-SearchBot is not explicitly blocked; also verify Cloudflare WAF/bot rules")
+    check("indexnow", "indexnow" in lower or bool(find_named(root, {"indexnow-key.txt"})), "optional IndexNow integration for changed URLs")
 
     transition_all = len(re.findall(r"transition\s*:\s*all\b", corpus, re.I))
     scale_zero = len(re.findall(r"scale\(\s*0(?:[),\s])", corpus, re.I))

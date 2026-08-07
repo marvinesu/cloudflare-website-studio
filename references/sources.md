@@ -11,7 +11,7 @@ Research snapshot: 2026-08-07.
 | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | `aee6ce9352b842217b3f57c78296a7a4fa35a7f3` | Apache-2.0 | Context-first shaping, critique/audit/polish, resilient UI, performance, responsive quality, clear product language |
 | [leonxlnx/taste-skill](https://github.com/leonxlnx/taste-skill) | `e988add20dab0fa97d7a76781c48961c8184288e` | MIT | Design dials, anti-default discipline, layout variety, anti-AI visual tells, redesign preservation, motion-led marketing patterns |
 
-Current platform guidance was checked against official Cloudflare Workers/Pages documentation and Google Search Central. Links are kept in the relevant references.
+Current platform guidance was checked against official Cloudflare Workers/Pages documentation, Google Search Central, Bing Webmaster Guidelines/IndexNow, and OpenAI publisher crawler guidance. Links are kept in the relevant references.
 
 Resolve conflicts in this order:
 

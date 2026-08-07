@@ -1,6 +1,6 @@
 ---
 name: cloudflare-website-studio
-description: Create, migrate, redesign, improve, deploy, and operate visually distinctive production websites on Cloudflare Workers or Pages. Use for WordPress-to-Astro migrations, static and full-stack sites, Cloudflare architecture, Wrangler configuration, bindings, forms, redirects, domains, preview and production releases, professional animation, responsive design, accessibility, performance, technical and on-page SEO, local SEO, and natural human-centered website copy that avoids generic AI patterns. Includes audit, implementation, browser QA, rollback, and production verification workflows.
+description: Create, migrate, redesign, improve, deploy, and operate visually distinctive production websites on Cloudflare Workers or Pages. Use for WordPress-to-Astro migrations, local-service businesses such as locksmiths and remodelers, automatic keyword and customer-question research, service and location page architecture, internal linking, AI-search discoverability, static and full-stack sites, Cloudflare architecture, Wrangler configuration, bindings, forms, redirects, domains, professional animation, responsive design, accessibility, performance, technical/on-page/local SEO, and natural human-centered copy. Includes audit, implementation, browser QA, rollback, and production verification workflows.
 ---
 
 # Cloudflare Website Studio
@@ -19,6 +19,7 @@ Read only the references needed for the task, but always read every reference ma
 | Cloudflare setup or deployment | [cloudflare-platform.md](references/cloudflare-platform.md), [qa-release.md](references/qa-release.md) |
 | Copy or SEO work | [content-seo.md](references/content-seo.md) |
 | Animation work | [motion.md](references/motion.md) |
+| Local-service business | [local-service-growth.md](references/local-service-growth.md), [content-seo.md](references/content-seo.md), [visual-design.md](references/visual-design.md), [motion.md](references/motion.md), [qa-release.md](references/qa-release.md) |
 
 Consult [sources.md](references/sources.md) when updating this skill or resolving provenance.
 
@@ -41,6 +42,21 @@ Before changing code:
 5. For migrations, create an explicit URL map, feature inventory, claim matrix, media inventory, integration inventory, and DNS inventory.
 
 Never invent testimonials, clients, metrics, awards, locations, credentials, prices, guarantees, availability, or structured-data facts. Ask or omit.
+
+## Auto-run local-service growth mode
+
+When the business is a locksmith, remodeler, roofer, plumber, electrician, HVAC provider, landscaper, cleaner, contractor, or another location-based service, automatically load [local-service-growth.md](references/local-service-growth.md). Do not wait for the user to say "SEO."
+
+Before finalizing the information architecture or copy:
+
+1. Research the live search landscape for every verified core service and priority market.
+2. Collect transactional, commercial, informational, local, emergency, and comparison intent; customer questions; vocabulary; SERP features; and competitor coverage gaps.
+3. Produce a keyword-to-page map that prevents cannibalization.
+4. Build service pages, qualified location pages, useful question-led resources, and contextual internal links.
+5. Add search and AI-discovery foundations: crawlable HTML, canonical URLs, schema from verified facts, sitemaps, descriptive links, answer-ready passages, source attribution, crawler policy, and freshness workflows.
+6. Reject thin programmatic location pages and unsupported local claims.
+
+Research findings are evidence, not permission to copy competitors. Write original content from verified business knowledge and useful synthesis.
 
 ## Make architecture decisions deliberately
 

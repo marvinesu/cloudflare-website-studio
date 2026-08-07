@@ -1,4 +1,4 @@
 interface:
   display_name: "Cloudflare Website Studio"
-  short_description: "Ship distinctive sites on Cloudflare"
-  default_prompt: "Use $cloudflare-website-studio to build or improve this site with humanized copy, strong SEO, professional motion, and a verified Cloudflare Workers or Pages deployment."
+  short_description: "Grow local-service sites on Cloudflare"
+  default_prompt: "Use $cloudflare-website-studio to research and build this local-service site with keyword-mapped services and locations, customer answers, internal links, humanized copy, professional motion, strong SEO, AI discoverability, and verified Cloudflare deployment."
