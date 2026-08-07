@@ -1,0 +1,58 @@
+# QA and release gates
+
+## Code and build
+
+- Repository instructions followed; unrelated changes preserved
+- Format/lint/typecheck/tests pass
+- Production build succeeds with expected route count
+- Dependency and secret scans reviewed
+- Generated output contains no private exports, source maps, server files, or credentials
+- Wrangler configuration validates against the installed version
+- Local test uses the real Pages/Workers runtime where possible
+
+## Content and SEO
+
+- Every route has an approved disposition and correct status
+- Titles, descriptions, canonicals, H1s, Open Graph, schema, sitemap, robots, RSS, and internal links validate
+- Claims are verified and consistent across HTML, metadata, schema, forms, and feeds
+- Redirects are specific, single-hop where practical, and loop-free
+- Unknown routes return an intentional 404/410
+- Preview URLs are non-indexable
+
+## Visual and responsive
+
+- Representative route from every family inspected
+- Desktop, tablet, breakpoint boundaries, 390px or narrower, and content extremes tested
+- No horizontal overflow, clipping, sticky/floating collisions, or hidden CTA
+- 200% zoom, keyboard order, focus, Escape, labels, errors, contrast, and touch targets pass
+- Images have correct crop, dimensions, loading behavior, and alt treatment
+- Empty, loading, success, error, and long-content states are intentional
+
+## Motion
+
+- Motion level and purposes documented
+- At least three distinct categories for an expressive marketing pass
+- No `transition: all`, `scale(0)` entry, casual layout animation, or ungated hover motion
+- Interruption, repeated triggers, exits, client navigation cleanup, and background/offscreen behavior tested
+- Reduced-motion variant preserves content and state comprehension
+- Core HTML stays visible if JavaScript or animation initialization fails
+
+## Runtime and security
+
+- Static paths remain asset-first unless intentionally protected/transformed
+- APIs reject unsupported methods, origins, content types, oversized/invalid payloads, and abuse cases
+- CORS and security headers match actual dependencies
+- Secrets exist in bindings, not source or client bundles
+- Forms show honest status and approved end-to-end delivery is observed
+- Logs show no unaccounted exceptions; tracing/monitoring configured according to risk
+
+## Production
+
+- Canonical homepage and representative internal routes return intended content and assets
+- Apex/`www`, TLS, redirects, headers, and cache behavior are correct
+- Active deployment/version and Git SHA match intended release
+- APIs and forms work on every served hostname
+- CDN/cache differences are distinguished from deployment failure using asset hashes and response headers
+- Rollback target and procedure are recorded and executable
+
+Do not declare completion from upload logs, a single screenshot, a `200` form response, or one CDN point of presence.

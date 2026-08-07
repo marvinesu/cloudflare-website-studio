@@ -1,61 +1,95 @@
-# Motion playbook
+# Professional web motion playbook
 
-## Choose a level
+## Decide whether motion belongs
 
-- **Restrained:** product UI, utilities, repeated workflows. Use fast state transitions, press feedback, menus, overlays, and essential spatial continuity.
-- **Expressive:** default for marketing, portfolio, editorial, and service websites. Add a coordinated entrance, varied section or media reveals, tactile CTAs, navigation motion, and one memorable interaction when content supports it.
-- **Cinematic:** launches, campaigns, or storytelling pages where motion is part of the concept. Add one signature sequence with careful pacing and progressive enhancement.
+Pass every candidate through this gate:
 
-Never equate "more animation" with repeating `opacity + translateY` on every element. Vary motion by semantic role and preserve a common timing language.
+1. **Frequency:** remove animation from keyboard actions and extremely frequent workflows; keep repeated UI nearly instant.
+2. **Purpose:** name feedback, spatial continuity, state indication, jarring-change prevention, explanation, or rare delight.
+3. **Budget:** keep routine UI under roughly 300ms; marketing explanation may be longer when it does not block action.
+4. **Function:** never move data or controls the user is trying to read or operate merely for style.
 
-## Build the system
+The goal is visible craft, not maximum movement.
 
-Define reusable tokens near the project's design tokens:
+## Choose a motion level
+
+- **Restrained:** product UI and repeated workflows. Fast transitions, press feedback, menus, overlays, state continuity.
+- **Expressive:** default for marketing, portfolio, editorial, and service sites. Coordinated hero, varied reveals, tactile controls, navigation motion, and one memorable interaction.
+- **Cinematic:** campaigns and storytelling pages. One signature sequence with controlled pacing and progressive enhancement.
+
+## Build a shared system
+
+Extend existing tokens. Otherwise start with:
 
 ```css
 :root {
-  --motion-fast: 160ms;
-  --motion-base: 240ms;
-  --motion-slow: 480ms;
-  --ease-out: cubic-bezier(.16, 1, .3, 1);
-  --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+  --motion-press: 140ms;
+  --motion-ui: 220ms;
+  --motion-reveal: 520ms;
+  --ease-out: cubic-bezier(.23, 1, .32, 1);
+  --ease-in-out: cubic-bezier(.77, 0, .175, 1);
+  --ease-drawer: cubic-bezier(.32, .72, 0, 1);
   --reveal-distance: 20px;
   --stagger-step: 55ms;
 }
 ```
 
-Adapt values to the brand. Keep frequent UI at roughly 120-250ms. Longer sequences must communicate hierarchy or story without blocking interaction.
+Use ease-out for entry/exit, ease-in-out for movement/morphing, ease for simple color, and linear for continuous progress. Never use ease-in for ordinary UI entry. Make exits faster than entrances.
 
-## Select distinct categories
+## Choose the cheapest capable tool
 
-- **Hero:** orchestrate headline, supporting copy, CTA, and key media with hierarchy-aware timing. Keep primary action usable immediately.
-- **Section/media reveal:** use clip-path, mask, scale, or directional movement that relates to the layout. Reveal once unless repetition communicates state.
-- **Navigation:** animate menu geometry, active indicators, or overlay state with correct transform origin and reversible transitions.
-- **CTA feedback:** add hover, press, focus, loading, success, and error feedback. Gate hover effects behind `(hover: hover) and (pointer: fine)`.
-- **Cards and media:** use subtle image scale, parallax, spotlight, depth, or content transition only when the component invites exploration.
-- **Text:** use line or word reveals sparingly for major editorial moments, never for routine reading or accessibility-critical copy.
-- **Signature interaction:** tie scroll progress, pointer position, comparison, stacking, or scene changes directly to the site's message.
+1. CSS transition for hover, press, focus, and controlled state changes
+2. CSS `@starting-style` for simple mount entry
+3. CSS animation for predetermined sequences that must remain smooth during load
+4. WAAPI for programmatic, hardware-friendly sequencing without a library
+5. Motion/GSAP only for gestures, springs, layout/exit orchestration, pinning, or complex story sequences
+
+Do not add a large animation library for a fade. Reuse a library already in the project when appropriate.
+
+## Create distinct motion categories
+
+### Hero choreography
+
+Sequence headline, supporting copy, CTA, and primary media according to hierarchy. Keep the CTA clickable immediately. Use line/word splitting only on high-value display text and preserve accessible text.
+
+### Navigation and menus
+
+Animate active indicators and menu geometry with reversible transitions. Anchor popovers to their trigger using correct transform origin. Keep modals centered. Never hide a sticky header while focus is inside it or the mobile menu is open.
+
+### Section and media reveals
+
+Choose movement that matches composition: clip/mask for image unveiling, small translation for hierarchy, scale for depth, or directional movement tied to the layout. Do not apply the same fade-up to every section.
+
+### CTA and control feedback
+
+Use subtle press scale around `0.97`, visible focus, and honest loading/success/error transitions. Gate hover effects:
+
+```css
+@media (hover: hover) and (pointer: fine) {
+  .button:hover { transform: translateY(-2px); }
+}
+```
+
+### Signature interaction
+
+Create at most one dominant interaction per page: scroll-driven product explanation, sticky stack, comparison reveal, controlled horizontal narrative, pointer-responsive material, or spatial transition. Tie it to the message, not fashion.
 
 ## Engineering rules
 
-- Prefer transform and opacity; use clip-path deliberately and test paint cost.
-- Prefer CSS transitions for predetermined, interruptible UI. Use WAAPI or a motion library for stateful orchestration, gestures, or dynamic sequencing.
-- Use ease-out for entrances/exits, ease-in-out for movement, ease for color, and linear for continuous progress.
-- Make exits faster than entrances and preserve velocity for interruptible gestures.
-- Avoid `transition: all`, `scale(0)`, default center origin for anchored popovers, unbounded scroll listeners, and animations that hide essential initial HTML.
-- Clean up observers, timers, RAF callbacks, and animation instances across client-side navigation.
-- Pause or reduce continuous effects offscreen and on hidden tabs.
+- Prefer transform and opacity. Use clip-path deliberately. Avoid animating width, height, margin, padding, top, or left except justified cases such as measured accordions.
+- Never use `transition: all` or enter from `scale(0)`.
+- Use transitions for rapidly retriggered UI so interruption retargets smoothly; use springs for gestures that must preserve velocity.
+- Enter and exit through coherent paths.
+- Keep stagger steps around 30-80ms and never block interaction until a stagger finishes.
+- Use direct transforms for performance; avoid high-frequency inherited CSS variable updates across large subtrees.
+- Pause continuous effects offscreen and when the document is hidden.
+- Clean up observers, listeners, timers, RAF loops, ScrollTriggers, split text, and animation instances across route changes.
+- Test animations under CPU load and inspect uncertain motion at 2-5x duration or frame by frame.
 
-## Reduced motion
+## Reduced motion and static resilience
 
-Keep useful opacity and color feedback while removing large translation, parallax, zoom, rotation, and scrubbed movement. Do not simply disable content visibility or leave elements stuck in pre-animation states.
+Core content must be visible before JavaScript and if initialization fails. Under `prefers-reduced-motion: reduce`, preserve useful opacity/color feedback but remove large translation, parallax, zoom, rotation, scrubbing, and continuous motion. Never leave content stuck in a hidden pre-animation state.
 
-## Motion acceptance report
+## Acceptance report
 
-Report:
-
-1. Declared motion level and rationale
-2. Motion categories changed
-3. Shared tokens or primitives introduced
-4. Desktop, narrow-mobile, touch, interruption, and reduced-motion checks
-5. Any intentionally unanimated surfaces and why
+Report the declared motion level, purpose of each category, tokens/tools used, rejected candidates, and results for first load, repeated navigation, interruption, exit, mobile, touch, reduced motion, no-JavaScript visibility, and cleanup.

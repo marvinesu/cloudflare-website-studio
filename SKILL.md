@@ -1,83 +1,117 @@
 ---
 name: cloudflare-website-studio
-description: Build, migrate, redesign, or improve production websites deployed with Cloudflare Pages or Workers. Use for new marketing sites, existing frontend modifications, WordPress-to-static/Astro migrations, Cloudflare deployment preparation, post-build design critique, visual polish, accessibility, responsive behavior, purposeful motion, performance, SEO preservation, forms, redirects, and production verification. Combines a migration-first delivery workflow with principles from Impeccable, Taste Skill, and Emil Kowalski's design engineering guidance.
+description: Create, migrate, redesign, improve, deploy, and operate visually distinctive production websites on Cloudflare Workers or Pages. Use for WordPress-to-Astro migrations, static and full-stack sites, Cloudflare architecture, Wrangler configuration, bindings, forms, redirects, domains, preview and production releases, professional animation, responsive design, accessibility, performance, technical and on-page SEO, local SEO, and natural human-centered website copy that avoids generic AI patterns. Includes audit, implementation, browser QA, rollback, and production verification workflows.
 ---
 
 # Cloudflare Website Studio
 
-Treat the website as a production system and a designed experience. Preserve content, URLs, claims, integrations, and rollback before redesigning. Make design decisions from the site's actual audience and brand, then verify the built result in a browser and on Cloudflare.
+Build a production website, not a mockup. Treat content truth, URLs, design, motion, SEO, runtime behavior, Cloudflare configuration, and rollback as one delivery system.
 
-## Choose the operating mode
+## Load the right references
 
-- **Create:** define product and design direction, build the smallest complete site, then deploy.
-- **Migrate:** inventory WordPress read-only, map every public URL and feature, rebuild, then cut over reversibly.
-- **Improve:** audit the current implementation and rendered site, prioritize issues, modify in place, then compare before and after.
-- **Review:** produce evidence-backed findings without editing unless the user also requests changes.
+Read only the references needed for the task, but always read every reference marked required for the chosen mode.
 
-Read [references/workflow.md](references/workflow.md) for the required phase gates. Read [references/design-quality.md](references/design-quality.md) before changing visual design or interaction. Read [references/motion.md](references/motion.md) whenever the request includes animation, polish, redesign, delight, or general website improvement. Read [references/cloudflare.md](references/cloudflare.md) for Pages/Workers architecture and release checks.
+| Mode | Required references |
+| --- | --- |
+| Create or redesign | [visual-design.md](references/visual-design.md), [motion.md](references/motion.md), [content-seo.md](references/content-seo.md), [qa-release.md](references/qa-release.md) |
+| Improve an existing site | Same as create, plus [workflow.md](references/workflow.md) |
+| WordPress migration | [migration.md](references/migration.md), [cloudflare-platform.md](references/cloudflare-platform.md), [content-seo.md](references/content-seo.md), [qa-release.md](references/qa-release.md) |
+| Cloudflare setup or deployment | [cloudflare-platform.md](references/cloudflare-platform.md), [qa-release.md](references/qa-release.md) |
+| Copy or SEO work | [content-seo.md](references/content-seo.md) |
+| Animation work | [motion.md](references/motion.md) |
 
-See [references/sources.md](references/sources.md) for the upstream projects combined by this workflow and the responsibility assigned to each.
+Consult [sources.md](references/sources.md) when updating this skill or resolving provenance.
 
-## Establish the contract
+## Select the delivery mode
 
-1. Inspect repository instructions, Git status, stack, build scripts, deployment configuration, and existing design tokens.
-2. Identify the canonical domain, Cloudflare target, editable scope, source of truth, approval boundaries, and rollback path.
-3. Classify the surface: marketing, editorial, ecommerce, product UI, or hybrid. Do not apply marketing-page patterns blindly to dashboards or transactional flows.
-4. For an existing site, capture representative desktop and mobile states before edits. Audit real routes, not only the homepage.
-5. For WordPress, keep the source read-only. Inventory pages, posts, media, menus, metadata, schema, forms, scripts, redirects, plugins, and DNS-related integrations.
+- **Create:** shape the business, content, visual system, routes, and Cloudflare target before implementation.
+- **Migrate:** keep WordPress read-only, inventory everything, preserve URL and claim contracts, rebuild, preview, then cut over reversibly.
+- **Improve:** capture the current site, audit code and rendered behavior, preserve what works, implement prioritized improvements, and compare before/after.
+- **Review:** report evidence and recommendations without editing.
+- **Deploy:** validate the existing build, configure the correct Cloudflare product, publish to preview, verify, then release with rollback.
 
-Never infer business claims, locations, credentials, testimonials, prices, guarantees, or regulatory statements. Publish verified or explicitly owner-authorized facts only.
+## Establish the project contract
 
-## Shape before building
+Before changing code:
 
-Write a short design direction covering audience, desired feeling, visual references, anti-references, typography, palette, spacing, shape language, imagery, and motion intensity. Reuse a coherent existing system when one exists. If it does not, create a small token set before page-specific styling.
+1. Read repository instructions and inspect Git status, stack, commands, routes, content sources, design tokens, current motion, and Cloudflare configuration.
+2. Identify the business, real audience, primary user action, canonical domain, target markets, approved claims, measurable success, scope, and non-goals.
+3. Record the Cloudflare account/project/Worker, production branch, preview strategy, custom domains, bindings, secrets, DNS dependencies, and rollback target.
+4. For existing sites, capture representative desktop and narrow-mobile states and inspect at least one page from every route family.
+5. For migrations, create an explicit URL map, feature inventory, claim matrix, media inventory, integration inventory, and DNS inventory.
 
-Declare the motion level as `restrained`, `expressive`, or `cinematic`. For an improvement request where the user does not specify a level, default to `expressive` for marketing and portfolio sites and `restrained` for product UI. Do not silently choose "almost no motion."
+Never invent testimonials, clients, metrics, awards, locations, credentials, prices, guarantees, availability, or structured-data facts. Ask or omit.
 
-Prioritize in this order:
+## Make architecture decisions deliberately
 
-1. Correct content and task completion
-2. Information architecture and hierarchy
-3. Responsive layout and accessibility
-4. Typography, color, imagery, and component consistency
-5. Purposeful interaction and motion
-6. Decorative delight
+Choose the smallest runtime that satisfies the site:
 
-Do not redesign merely to make the work visibly different. Preserve distinctive, effective choices and fix the highest-impact weaknesses.
+- Prefer static HTML for content-led marketing, editorial, portfolio, and local-service websites.
+- Use Cloudflare Pages for straightforward Git-connected static delivery and Pages Functions when its model fits.
+- Use Workers Static Assets when Worker-owned routing, selective `/api/*` execution, middleware, authentication, or service bindings justify it.
+- Keep assets asset-first. Route only paths that require compute through Worker-first behavior.
+- Do not move an entire site to SSR because one form or endpoint is dynamic.
+- Treat `wrangler.jsonc` as the source of truth for new Workers projects. Validate it against the installed Wrangler version and current official documentation.
 
-## Implement safely
+## Shape a specific visual and editorial direction
 
-- Prefer static output for content-led sites. Add Worker logic only for genuine server needs such as validated forms, authentication boundaries, or custom media behavior.
-- Preserve every indexed URL or map it to a specific permanent redirect. Do not redirect all missing pages to the homepage.
-- Keep essential copy and navigation in initial HTML. Treat JavaScript as enhancement.
-- Use semantic elements, one logical H1, visible focus, keyboard operation, sufficient contrast, explicit image dimensions, and reduced-motion fallbacks.
-- Centralize tokens and shared primitives. Avoid page-local style drift, unnecessary cards, generic three-column grids, default font choices, and decorative UI without content purpose.
-- Make animation interruptible, brief, and motivated by feedback, state, hierarchy, or spatial continuity. Avoid `transition: all`, layout-property animation, bounce easing, and repeated motion on frequent actions.
-- Preserve secrets in Cloudflare bindings or secrets. Never expose them in client bundles, logs, commits, or migration exports.
+Write a short design read before implementation:
 
-When the locally installed `impeccable`, `design-taste-frontend`, or `emil-design-eng` skill is available, load it for a focused deep pass. Resolve conflicts with this priority: user instructions, repository instructions, verified content/URL contracts, accessibility and functionality, established brand system, then aesthetic preference.
+```text
+Audience: ...
+Business promise: ...
+Desired feeling: ...
+Visual references / anti-references: ...
+Typography and color logic: ...
+Layout variance: 1-10
+Motion intensity: 1-10
+Content density: 1-10
+Signature idea: ...
+```
 
-## Complete the motion pass
+Preserve a strong existing brand. Otherwise create a compact token system for type, color, spacing, radii, shadows, layers, and motion. Make the site recognizable without its logo. If the design could be swapped onto an unrelated startup unchanged, it is not finished.
 
-Do not treat motion as optional when the request asks to improve, redesign, polish, animate, or add delight to a marketing or portfolio site.
+## Build in this order
 
-1. Inventory current transitions, reveals, hover/press feedback, navigation changes, overlays, media behavior, and scroll-linked effects.
-2. Identify motion that is missing, generic, excessive, janky, or disconnected from the visual concept.
-3. Implement a coherent motion system using shared duration, easing, distance, stagger, and reduced-motion tokens.
-4. For an `expressive` marketing-site pass, improve at least three distinct categories when the page supports them: hero entrance, section/media reveal, navigation or menu transition, CTA feedback, card/media hover, text treatment, or one signature storytelling interaction. Do not count multiple copies of the same fade-up as separate categories.
-5. For `cinematic`, create one technically meaningful signature sequence tied to the story; keep content accessible and interaction available before it finishes.
-6. Review the result in motion, not only screenshots. Verify first load, repeat navigation, interruption, reverse/exit behavior, narrow mobile, touch, and reduced motion.
+1. Content truth, route model, and primary conversion path
+2. Semantic initial HTML, metadata, schema, sitemap, robots, redirects, and 404
+3. Tokens, typography, layout, navigation, footer, forms, and reusable primitives
+4. Route families and responsive composition
+5. Cloudflare runtime endpoints and bindings
+6. Professional motion system and signature interaction
+7. Accessibility, resilience, performance, and SEO validation
+8. Preview deployment, production cutover, verification, and rollback evidence
 
-If no animation should be added, state the concrete usability, accessibility, brand, or frequency reason. "Motion is optional" is not enough.
+Keep core copy and navigation visible without animation JavaScript. Enhance progressively.
 
-## Verify the result
+## Enforce a professional motion pass
 
-Run `python scripts/site_preflight.py <project-root>` for a portable configuration check. Then run the project's own lint, typecheck, test, and production build commands.
+For marketing, portfolio, and service websites, do not finish with only generic fade-up reveals. Declare `restrained`, `expressive`, or `cinematic` motion. Default to expressive unless the brand or use frequency calls for restraint.
 
-Inspect the rendered result at representative desktop and true narrow-mobile widths. Test navigation, focus, Escape, forms, loading/error/empty states, overflow, content without JavaScript where relevant, reduced motion, and client-side navigation cleanup. Exercise every new animation and record which motion categories changed. Measure or inspect Core Web Vitals risks instead of guessing.
+An expressive pass must address at least three distinct categories supported by the page: hero choreography, navigation/menu transitions, section or media reveals, CTA feedback, card/media interaction, typography treatment, state transitions, or one signature story-driven interaction. Repeated copies of one reveal count once.
 
-For deployment, verify the canonical public URL, critical routes, redirects, metadata, sitemap, robots, assets, forms, API error paths, apex/`www` policy, and rollback procedure. Upload logs alone are not proof of a successful release.
+Name the purpose of every animation: feedback, spatial continuity, state indication, preventing a jarring change, explanation, or rare delight. Reject motion that cannot name a purpose. Ship hover gating, interruption behavior, cleanup, and a meaningful reduced-motion variant with the implementation.
 
-## Report
+## Write for humans and search engines
 
-Lead with what changed and whether it is verified. Include affected routes/files, tests and build results, deployment status, limitations, and rollback information. For review-only work, rank findings by impact and include concrete before/after recommendations.
+Write from verified source material and real audience vocabulary. Prefer concrete nouns, specific verbs, proof, constraints, and useful details over inflated claims. Vary sentence length naturally, remove redundant intros, and make each section advance the reader's decision.
+
+Avoid generic AI signals: vague superlatives, symmetrical three-card filler, repetitive headline formulas, fake quotations, fabricated precision, excessive em dashes, "in today's fast-paced world," "unlock," "elevate," "seamless," "cutting-edge," and paragraphs that say nothing testable. Do not attempt to game AI detectors. Humanize through truth, specificity, editorial judgment, and a consistent voice.
+
+SEO must serve the same reader. Give every indexable page a distinct search intent, useful main content, unique title and description, canonical URL, one logical H1, meaningful internal links, appropriate schema, and crawlable initial HTML. Do not mass-generate thin location or service pages.
+
+## Verify before completion
+
+Run the portable audit:
+
+```bash
+python scripts/site_preflight.py <project-root>
+```
+
+Then run the project's format, lint, typecheck, tests, and production build. Inspect generated output and the rendered site. Test desktop, breakpoint boundaries, true narrow mobile, keyboard, touch, zoom, reduced motion, no-JavaScript visibility where relevant, forms, failures, redirects, 404, metadata, schema, sitemap, robots, and canonical behavior.
+
+Deploy to preview first. Verify the actual Cloudflare runtime, not only a framework dev server. Production completion requires the canonical URL, representative internal routes, API failures, real form delivery when approved, domain policy, security headers, logs/errors, active deployment/version, Git SHA, and rollback target.
+
+## Report precisely
+
+State what changed, the design and motion direction, routes and files affected, validation commands and results, preview/production status, known limitations, and rollback. Distinguish "built," "locally tested," "preview deployed," "production deployed," and "production verified."
