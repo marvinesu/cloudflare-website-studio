@@ -1,4 +1,4 @@
 interface:
   display_name: "Cloudflare Website Studio"
   short_description: "Build, migrate, and polish Cloudflare sites"
-  default_prompt: "Use $cloudflare-website-studio to audit and improve my website for Cloudflare deployment."
+  default_prompt: "Use $cloudflare-website-studio to audit and visibly improve my website, including an expressive motion pass, then verify it for Cloudflare deployment."

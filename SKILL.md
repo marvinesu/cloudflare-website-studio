@@ -14,7 +14,7 @@ Treat the website as a production system and a designed experience. Preserve con
 - **Improve:** audit the current implementation and rendered site, prioritize issues, modify in place, then compare before and after.
 - **Review:** produce evidence-backed findings without editing unless the user also requests changes.
 
-Read [references/workflow.md](references/workflow.md) for the required phase gates. Read [references/design-quality.md](references/design-quality.md) before changing visual design, interaction, or motion. Read [references/cloudflare.md](references/cloudflare.md) for Pages/Workers architecture and release checks.
+Read [references/workflow.md](references/workflow.md) for the required phase gates. Read [references/design-quality.md](references/design-quality.md) before changing visual design or interaction. Read [references/motion.md](references/motion.md) whenever the request includes animation, polish, redesign, delight, or general website improvement. Read [references/cloudflare.md](references/cloudflare.md) for Pages/Workers architecture and release checks.
 
 See [references/sources.md](references/sources.md) for the upstream projects combined by this workflow and the responsibility assigned to each.
 
@@ -31,6 +31,8 @@ Never infer business claims, locations, credentials, testimonials, prices, guara
 ## Shape before building
 
 Write a short design direction covering audience, desired feeling, visual references, anti-references, typography, palette, spacing, shape language, imagery, and motion intensity. Reuse a coherent existing system when one exists. If it does not, create a small token set before page-specific styling.
+
+Declare the motion level as `restrained`, `expressive`, or `cinematic`. For an improvement request where the user does not specify a level, default to `expressive` for marketing and portfolio sites and `restrained` for product UI. Do not silently choose "almost no motion."
 
 Prioritize in this order:
 
@@ -55,11 +57,24 @@ Do not redesign merely to make the work visibly different. Preserve distinctive,
 
 When the locally installed `impeccable`, `design-taste-frontend`, or `emil-design-eng` skill is available, load it for a focused deep pass. Resolve conflicts with this priority: user instructions, repository instructions, verified content/URL contracts, accessibility and functionality, established brand system, then aesthetic preference.
 
+## Complete the motion pass
+
+Do not treat motion as optional when the request asks to improve, redesign, polish, animate, or add delight to a marketing or portfolio site.
+
+1. Inventory current transitions, reveals, hover/press feedback, navigation changes, overlays, media behavior, and scroll-linked effects.
+2. Identify motion that is missing, generic, excessive, janky, or disconnected from the visual concept.
+3. Implement a coherent motion system using shared duration, easing, distance, stagger, and reduced-motion tokens.
+4. For an `expressive` marketing-site pass, improve at least three distinct categories when the page supports them: hero entrance, section/media reveal, navigation or menu transition, CTA feedback, card/media hover, text treatment, or one signature storytelling interaction. Do not count multiple copies of the same fade-up as separate categories.
+5. For `cinematic`, create one technically meaningful signature sequence tied to the story; keep content accessible and interaction available before it finishes.
+6. Review the result in motion, not only screenshots. Verify first load, repeat navigation, interruption, reverse/exit behavior, narrow mobile, touch, and reduced motion.
+
+If no animation should be added, state the concrete usability, accessibility, brand, or frequency reason. "Motion is optional" is not enough.
+
 ## Verify the result
 
 Run `python scripts/site_preflight.py <project-root>` for a portable configuration check. Then run the project's own lint, typecheck, test, and production build commands.
 
-Inspect the rendered result at representative desktop and true narrow-mobile widths. Test navigation, focus, Escape, forms, loading/error/empty states, overflow, content without JavaScript where relevant, reduced motion, and client-side navigation cleanup. Measure or inspect Core Web Vitals risks instead of guessing.
+Inspect the rendered result at representative desktop and true narrow-mobile widths. Test navigation, focus, Escape, forms, loading/error/empty states, overflow, content without JavaScript where relevant, reduced motion, and client-side navigation cleanup. Exercise every new animation and record which motion categories changed. Measure or inspect Core Web Vitals risks instead of guessing.
 
 For deployment, verify the canonical public URL, critical routes, redirects, metadata, sitemap, robots, assets, forms, API error paths, apex/`www` policy, and rollback procedure. Upload logs alone are not proof of a successful release.
 
