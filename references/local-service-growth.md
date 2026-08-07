@@ -39,6 +39,34 @@ Classify every query:
 
 Group terms by shared intent, not by superficial wording. A synonym usually belongs on one strong page, not a second competing page.
 
+### Use a repeatable research sample
+
+For each core service and priority market, inspect enough results to identify stable patterns rather than relying on one query. At minimum record:
+
+- the query, locale/device assumptions, date, and visible result types;
+- leading local-pack/business categories when visible;
+- recurring service terminology, modifiers, questions, and trust factors;
+- whether results favor a service page, location page, guide, directory, product, or mixed intent;
+- at least three credible competitor or authoritative pages and the useful topics they cover;
+- gaps where searchers still lack a clear, locally applicable answer.
+
+Search results are personalized and change. Label conclusions as observations, not universal ranking facts. Do not scrape or automate a source against its terms.
+
+### Score page opportunities
+
+Score each candidate from 0-3 on:
+
+| Dimension | 0 | 3 |
+| --- | --- | --- |
+| Business fit | Not offered | Core profitable service |
+| User demand | No evidence | Repeated evidence across owned/search/tool data |
+| Conversion value | Little commercial value | Direct qualified-lead intent |
+| Unique evidence | No original material | Strong projects, expertise, photos, or local detail |
+| Competitive gap | Results already complete | Clear unmet need or weak local coverage |
+| Maintenance ability | Likely to become stale | Owner can keep it accurate |
+
+Prioritize high totals. Reject any candidate with business fit or unique evidence at zero, regardless of keyword volume.
+
 ## 3. Create the keyword-to-page map
 
 For each proposed URL record:
@@ -103,6 +131,17 @@ A useful location page may contain:
 
 Reject pages with spun introductions, identical service lists, fake local offices, map embeds as the only local value, keyword-stuffed neighborhood lists, or every service-city Cartesian combination. These are doorway-page risks.
 
+Require at least three forms of unique local utility before publishing, such as a completed project, original local photo, area-specific logistics, verified customer question, building-stock insight, relevant permit/authority link, local testimonial with permission, distinct service boundary, or named neighborhood knowledge. A city name inserted into shared copy does not count.
+
+### Model the business correctly
+
+- **Storefront:** show an address only when customers can visit a real, staffed location during stated hours.
+- **Service-area business:** describe verified service areas without presenting the hidden operational address as a customer-facing office.
+- **Hybrid:** distinguish visitable hours/location from areas served off-site.
+- **Multiple locations:** create a location entity/page only for a real eligible operation with its own accurate details and evidence, not for a technician, virtual office, or ranking target.
+
+Keep website facts, Organization/LocalBusiness schema, contact pages, and Google Business Profile information consistent. Google-supported `LocalBusiness` rich-result fields expect a physical business location; do not fabricate an address to satisfy schema. Use Organization/Service/entity markup that accurately describes a service-area business when a LocalBusiness representation would mislead.
+
 ## 6. Answer the public's real questions
 
 Create an answer bank organized by decision stage:
@@ -156,6 +195,8 @@ For Bing/Copilot discovery, maintain crawlable links and canonical-only sitemaps
 
 Treat `llms.txt` as optional experimental metadata, not a ranking or citation guarantee. Do not substitute it for crawlable pages, schema, sitemaps, internal links, or crawler access.
 
+Google does not use `llms.txt` for Search or its generative features. Do not create it as a default Google SEO task. If another named system documents support and the owner wants it, generate it from canonical public content and keep it synchronized.
+
 ## 9. Integrate design and motion
 
 Do not let SEO architecture produce a templated wall of text. Give service and location page families distinct but consistent compositions using relevant photography, process diagrams, project proof, local details, answer accordions, comparisons, and focused conversion sections.
@@ -178,6 +219,8 @@ Before implementation or major rewrite, produce:
 - AI crawler and indexing policy;
 - content briefs with proof/source requirements;
 - measurement plan for rankings, impressions, clicks, calls/forms, indexed pages, AI referrals, and lead quality.
+
+The keyword-to-page map must include the opportunity score and evidence source. The location qualification table must include the three unique local-utility items or a `reject/defer` decision.
 
 ## Official references
 

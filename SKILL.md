@@ -7,6 +7,30 @@ description: Create, migrate, redesign, improve, deploy, and operate visually di
 
 Build a production website, not a mockup. Treat content truth, URLs, design, motion, SEO, runtime behavior, Cloudflare configuration, and rollback as one delivery system.
 
+## Non-negotiable execution contract
+
+Run the work as gated delivery, not one uninterrupted generation pass. Do not enter the next gate until the current gate has evidence. For a local-service build, the minimum gates are: verified business facts, dated demand research, keyword-to-page map, site architecture/internal links, content/design direction, implementation, local browser QA, Cloudflare preview, and production verification.
+
+Create `website-plan/` in the target project and keep the applicable artifacts current:
+
+```text
+website-plan/
+  project-brief.md
+  fact-claim-ledger.md
+  research-notes.md
+  keyword-page-map.csv
+  question-bank.md
+  url-internal-link-map.csv
+  location-qualification.csv
+  content-briefs/
+  design-direction.md
+  motion-plan.md
+  cloudflare-release.md
+  qa-report.md
+```
+
+Do not publish research artifacts if they contain private business data, credentials, personal lead data, or licensed-tool exports that cannot be redistributed.
+
 ## Load the right references
 
 Read only the references needed for the task, but always read every reference marked required for the chosen mode.
@@ -126,8 +150,12 @@ python scripts/site_preflight.py <project-root>
 
 Then run the project's format, lint, typecheck, tests, and production build. Inspect generated output and the rendered site. Test desktop, breakpoint boundaries, true narrow mobile, keyboard, touch, zoom, reduced motion, no-JavaScript visibility where relevant, forms, failures, redirects, 404, metadata, schema, sitemap, robots, and canonical behavior.
 
+For local-service projects, run `python scripts/site_preflight.py <project-root> --local-service`. Use `--strict` when every finding must block CI. Score the completed implementation with [quality-scorecard.md](references/quality-scorecard.md); a blocking defect fails release regardless of the total.
+
 Deploy to preview first. Verify the actual Cloudflare runtime, not only a framework dev server. Production completion requires the canonical URL, representative internal routes, API failures, real form delivery when approved, domain policy, security headers, logs/errors, active deployment/version, Git SHA, and rollback target.
 
 ## Report precisely
 
 State what changed, the design and motion direction, routes and files affected, validation commands and results, preview/production status, known limitations, and rollback. Distinguish "built," "locally tested," "preview deployed," "production deployed," and "production verified."
+
+Report each gate as `passed`, `failed`, `blocked`, or `not applicable`; never imply that an unrun gate passed.

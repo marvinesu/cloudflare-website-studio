@@ -35,6 +35,22 @@ Common phrases to challenge: "unlock," "elevate," "revolutionize," "seamless," "
 
 Avoid fake humanity: invented anecdotes, fake imperfections, unsupported first-person stories, fictional customer quotes, fabricated statistics, and random slang.
 
+## Run an editorial production pipeline
+
+Do not publish first-draft model output. For every important page:
+
+1. **Source pack:** collect approved business facts, first-hand notes, customer questions, project evidence, authoritative sources, and prohibited claims.
+2. **Brief:** define audience state, intent, page promise, proof, objections, conversion action, internal links, and update owner.
+3. **Outline:** make every section answer a real decision question; remove sections that exist only to hold keywords.
+4. **Draft:** write from the source pack without copying competitor language.
+5. **Fact pass:** verify every name, number, location, credential, price, timeline, safety statement, and citation against its source.
+6. **Voice pass:** read aloud; remove template rhythm, repeated transitions, empty claims, and abrupt keyword insertion.
+7. **Usefulness pass:** add first-hand detail, examples, constraints, alternatives, images/video, or practical next steps that commodity summaries lack.
+8. **Web pass:** verify headings, links, metadata, schema, alt text, mobile readability, and conversion clarity in the rendered page.
+9. **Human approval:** require owner/domain review for claims, regulated/safety content, testimonials, and high-value pages.
+
+Record author/reviewer and meaningful reviewed/updated dates when accurate. Do not add fake bylines or automatically refresh dates without substantive review.
+
 ## Build the message hierarchy
 
 For each page define:
@@ -80,6 +96,22 @@ Do not generate thin city/service combinations. A local page needs distinct, use
 
 Target good Core Web Vitals: LCP <= 2.5s, INP <= 200ms, CLS <= 0.1 at the 75th percentile where field data exists. Optimize the actual LCP resource, reserve media dimensions, reduce critical blocking work, limit client JavaScript, preload only critical assets, and keep animation from competing with loading and interaction.
 
+## Generative and AI search visibility
+
+Treat AI visibility as an extension of search and entity quality, not a separate content factory.
+
+- Create non-commodity pages with first-hand expertise, original local evidence, clear sourcing, and useful media.
+- Keep public content crawlable, indexable, eligible for snippets, and technically understandable.
+- Use clear headings, concise definitions, tables, lists, and direct answers only where they help people; do not unnaturally split every paragraph into "AI chunks."
+- Cover the topic and decision completely instead of creating pages for every synonym or possible fan-out query.
+- Keep entity facts consistent across site copy, schema, Business Profiles, contact pages, and authoritative third-party listings.
+- Do not add special "AI schema." Structured data supports ordinary search features and entity clarity but is not required for generative answers.
+- Do not rewrite separate copy "for AI." One accurate, useful canonical page should serve people, search, and citation systems.
+- Treat `llms.txt` as optional for systems that may consume it; Google currently ignores it for ranking and generative-search visibility.
+- Make browser-agent tasks operable with semantic controls, accessible names, predictable forms, clear validation, and no unnecessary interaction traps.
+
+Measure instead of promising: Google Search Console generative-AI reporting when available, Bing Webmaster Tools AI citations/grounding queries, `utm_source=chatgpt.com` referrals, assisted conversions, cited URLs, lead quality, and crawl/index health. Citation count is not the same as ranking, authority, or revenue.
+
 ## Verification
 
 - Inspect generated HTML, not only client DOM.
@@ -98,3 +130,7 @@ Target good Core Web Vitals: LCP <= 2.5s, INP <= 200ms, CLS <= 0.1 at the 75th p
 - https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls
 - https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview
 - https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data
+- https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
+- https://developers.google.com/search/docs/fundamentals/using-gen-ai-content
+- https://help.openai.com/en/articles/12627856-publishers-and-developers-faq
+- https://blogs.bing.com/webmaster/February-2026/Introducing-AI-Performance-in-Bing-Webmaster-Tools-Public-Preview

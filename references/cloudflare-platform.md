@@ -62,6 +62,8 @@ For each endpoint:
 - use `ctx.waitUntil()` only for work safe to complete after the response;
 - never claim email or downstream success until delivery is observed or durably queued.
 
+For every Turnstile-protected endpoint, server-side Siteverify validation is mandatory. Treat tokens as single-use and five-minute-lived; reject failed, expired, or replayed tokens. Verify the expected hostname and action when configured, keep the secret server-side, and use one idempotency key across retries of the same validation request. Use separate widgets and secrets for development, staging, and production. Turnstile is one abuse signal, not a replacement for payload limits, endpoint rate controls, and downstream spam defenses.
+
 ## Bindings and storage
 
 Choose by access pattern:
@@ -83,6 +85,8 @@ Declare bindings per environment. Bindings and secrets are not automatically inh
 - Declare required secret names when supported; never store values in examples, screenshots, logs, or migration exports.
 - Use least-privilege Cloudflare API tokens in CI.
 - Verify staging and production bindings separately.
+- Decide and document fail-open versus fail-closed behavior for every external dependency. Contact, authentication, payment, and privileged-write paths normally fail closed; noncritical analytics normally fail open.
+- Redact credentials, form bodies, email addresses, phone numbers, tokens, and other personal data from logs. Log stable request/deployment identifiers and outcome categories instead.
 
 ## Domains, DNS, and redirects
 
@@ -98,15 +102,18 @@ Set security headers according to actual dependencies: Content-Security-Policy, 
 
 Use fingerprinted filenames for long-lived immutable assets. Keep HTML revalidation-friendly. Avoid caching personalized or form responses. Verify `Cache-Control`, `ETag`, `Vary`, `Content-Encoding`, `CF-Cache-Status`, and range behavior where relevant.
 
+Do not enable cross-version caching without an explicit invalidation plan. During gradual deployments, verify that HTML and content-hashed assets cannot be split across incompatible versions; use version affinity where the application needs a user and its subrequests pinned to one version.
+
 ## Preview, deployment, rollback, and observability
 
 1. Run Wrangler schema/type checks, local runtime, tests, and a deployment dry run when available.
 2. Deploy to a branch/preview URL and confirm previews are not indexable.
 3. Verify routes, bindings, headers, logs, and actual edge responses.
-4. Record deployment/version ID, Git SHA, custom domains/routes, and rollback target.
-5. Release production and re-run the same checks on the canonical URL.
-6. Inspect Workers Logs or `wrangler tail` for exceptions. Enable observability deliberately; add traces or external export when operational value justifies it.
-7. Roll back immediately when critical routes, forms, security, or canonical behavior fail.
+4. Record deployment/version ID, Git SHA, custom domains/routes, binding/schema state, and a known-good rollback target.
+5. For material Worker changes, prefer a monitored gradual deployment when the account and architecture support it. Define traffic steps, observation windows, stop conditions, and ownership before starting. Test version skew across HTML/assets and service bindings; use version affinity or version overrides when consistency requires them.
+6. Release production and re-run the same checks on the canonical URL.
+7. Inspect Workers Logs or `wrangler tail` for exceptions and sample deliberately. Never emit secrets or raw personal form data. Correlate failures to Worker version when multiple versions are live.
+8. Roll back immediately when critical routes, forms, security, or canonical behavior fail. A code rollback does not roll back D1 migrations or recreate deleted/changed KV, R2, Queue, or Durable Object resources; prove data and binding compatibility before declaring the rollback executable.
 
 ## Official references
 
@@ -116,6 +123,10 @@ Use fingerprinted filenames for long-lived immutable assets. Keep HTML revalidat
 - https://developers.cloudflare.com/workers/wrangler/environments/
 - https://developers.cloudflare.com/workers/configuration/secrets/
 - https://developers.cloudflare.com/workers/observability/
+- https://developers.cloudflare.com/workers/versions-and-deployments/gradual-deployments/
+- https://developers.cloudflare.com/workers/versions-and-deployments/gradual-deployments/version-affinity/
+- https://developers.cloudflare.com/workers/versions-and-deployments/rollbacks/
+- https://developers.cloudflare.com/turnstile/get-started/server-side-validation/
 - https://developers.cloudflare.com/pages/functions/
 - https://developers.cloudflare.com/pages/functions/routing/
 - https://developers.cloudflare.com/pages/configuration/headers/

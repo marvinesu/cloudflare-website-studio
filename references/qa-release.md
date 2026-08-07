@@ -1,5 +1,7 @@
 # QA and release gates
 
+Use [quality-scorecard.md](quality-scorecard.md) for the final scored decision. The checks below remain mandatory evidence and cannot be averaged away.
+
 ## Code and build
 
 - Repository instructions followed; unrelated changes preserved
@@ -23,6 +25,8 @@
 - Every important page has at least one crawlable contextual inbound link
 - Intended AI/search crawlers are not accidentally blocked by robots.txt, Cloudflare WAF/bot rules, authentication, or JavaScript challenges
 - OAI-SearchBot and GPTBot policies are decided separately; IndexNow/AI discovery is never reported as a ranking or citation guarantee
+- Important pages passed source-pack, fact, voice, usefulness, rendered-web, and owner/domain review gates
+- No separate AI-only copy, fake author/reviewer, automatically refreshed date, special AI schema, forced content chunking, or default `llms.txt` claim
 
 ## Visual and responsive
 
@@ -49,7 +53,10 @@
 - CORS and security headers match actual dependencies
 - Secrets exist in bindings, not source or client bundles
 - Forms show honest status and approved end-to-end delivery is observed
+- Turnstile-protected forms validate tokens with Siteverify on the server, check configured hostname/action, and reject expired, reused, or failed tokens
+- Endpoint abuse controls, payload limits, and dependency fail-open/fail-closed behavior are documented and tested
 - Logs show no unaccounted exceptions; tracing/monitoring configured according to risk
+- Logs and traces contain no secrets or unnecessary personal form data
 
 ## Production
 
@@ -59,5 +66,6 @@
 - APIs and forms work on every served hostname
 - CDN/cache differences are distinguished from deployment failure using asset hashes and response headers
 - Rollback target and procedure are recorded and executable
+- Rollback compatibility with current data schemas and bound resources is proven; gradual releases include skew tests and stop conditions when used
 
 Do not declare completion from upload logs, a single screenshot, a `200` form response, or one CDN point of presence.

@@ -34,6 +34,8 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("root", nargs="?", default=".")
     parser.add_argument("--json", action="store_true", dest="as_json")
+    parser.add_argument("--local-service", action="store_true", help="enable local-service-specific gates")
+    parser.add_argument("--strict", action="store_true", help="return non-zero for warnings as well as errors")
     args = parser.parse_args()
     root = Path(args.root).resolve()
     if not root.is_dir():
@@ -67,7 +69,8 @@ def main() -> int:
     gitignore = read_text(root / ".gitignore")
     check("secret-ignore", any(token in gitignore for token in (".env", ".dev.vars")), "ignore local secret files")
     exposed_secret_files = find_named(root, {".env", ".dev.vars", ".env.production", ".dev.vars.production"})
-    check("no-local-secrets", not exposed_secret_files, "local secret files present; verify they are ignored and never committed", "error")
+    secrets_ignored = bool(re.search(r"(?m)^\s*(?:\.env|\.dev\.vars)(?:\.\*|\*)?\s*$", gitignore))
+    check("local-secrets-ignored", not exposed_secret_files or secrets_ignored, "local secret files must be ignored; also verify none are tracked", "error")
 
     robots = find_named(root, {"robots.txt"})
     sitemaps = find_named(root, {"sitemap.xml", "sitemap-index.xml"})
@@ -84,7 +87,15 @@ def main() -> int:
     check("description", "description" in lower, "meta description implementation found")
     check("canonical", "canonical" in lower, "canonical URL implementation found")
     check("structured-data", "application/ld+json" in lower or "schema.org" in lower, "structured data implementation found")
-    check("local-business-entity", "localbusiness" in lower or "organization" in lower, "Organization/LocalBusiness entity markup found when applicable")
+    if args.local_service:
+        check("local-business-entity", "localbusiness" in lower or "organization" in lower, "verified Organization/LocalBusiness entity markup required for local-service mode")
+        plan = root / "website-plan"
+        required_plan = {
+            "fact-claim-ledger.md", "research-notes.md", "keyword-page-map.csv",
+            "question-bank.md", "url-internal-link-map.csv", "location-qualification.csv",
+        }
+        missing_plan = sorted(name for name in required_plan if not (plan / name).is_file())
+        check("local-service-plan", not missing_plan, f"missing website-plan artifacts: {missing_plan or 'none'}", "error")
     crawlable_links = len(re.findall(r"<a\s+[^>]*href\s*=", corpus, re.I))
     check("crawlable-internal-links", crawlable_links > 0, f"found {crawlable_links} crawlable anchor implementation(s)")
 
@@ -115,7 +126,9 @@ def main() -> int:
         errors = sum(not item["passed"] and item["severity"] == "error" for item in results)
         print(f"\nPreflight complete: {len(results) - failures} passed, {failures} findings, {errors} errors.")
 
-    return 1 if any(not item["passed"] and item["severity"] == "error" for item in results) else 0
+    has_errors = any(not item["passed"] and item["severity"] == "error" for item in results)
+    has_findings = any(not item["passed"] for item in results)
+    return 1 if has_errors or (args.strict and has_findings) else 0
 
 
 if __name__ == "__main__":
