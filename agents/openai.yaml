@@ -1,4 +1,4 @@
 interface:
   display_name: "Cloudflare Website Studio"
   short_description: "Build animated lead-generation sites on Cloudflare"
-  default_prompt: "Use $cloudflare-website-studio to research, design, build, and deploy this Cloudflare site with verified claims, keyword-mapped content, a call/chat/form conversion system, professional motion, responsive browser QA, strong SEO, and production verification."
+  default_prompt: "Use $cloudflare-website-studio to research, design, build, and deploy this Cloudflare site with verified claims, keyword-mapped content, the smallest appropriate call/form/assistant conversion system, professional motion, responsive browser QA, strong SEO, and production verification."

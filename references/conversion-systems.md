@@ -16,6 +16,19 @@ Record before implementation:
 
 Do not use every channel by default. Emergency or urgent services usually need a call-first path. High-consideration work may need a short qualification form. Chat is useful only when it reduces confusion or routes the visitor to the right human action.
 
+## Ship call-only mode when calls are the workflow
+
+Use call-only mode when the owner requests no chatbot, operators primarily handle urgent requests by phone, or chat would merely repeat a call instruction.
+
+1. Keep contextual `tel:` links in the utility bar, header, hero, and relevant CTA sections.
+2. Add one persistent floating call control with the business name or phone number in its accessible label.
+3. On narrow screens, stretch it within safe side margins and reserve enough bottom padding that it does not hide the final content.
+4. Use a restrained attention cue, stop continuous motion under `prefers-reduced-motion`, and keep the link immediately clickable.
+5. Verify it at 390×844 and 320×568: fully visible, no horizontal overflow, no collision with menus, forms, browser chrome, or consent UI.
+6. Track placement and page path only; never log the dialed number or visitor data.
+
+Do not leave dormant chatbot markup, scripts, or launchers in call-only output. Do not stack a mobile dock, floating call button, timed popup, and chat launcher. One persistent floating call control is enough.
+
 ## Design a call-first assistant
 
 Prefer a deterministic decision assistant when answers must remain safe, fast, and claim-controlled.
@@ -62,7 +75,7 @@ Do not put addresses, API tokens, or SMTP credentials in client code. If Email S
 
 ## Prevent competing overlays
 
-Treat sticky headers, review bars, mobile docks, chat launchers, cookie notices, and promotional prompts as one layer system. On narrow screens, show no more than one nonessential floating control above the primary call/text dock. Collapse assistants to an icon-sized launcher and test the open panel at 390px or narrower.
+Treat sticky headers, review bars, mobile docks, chat launchers, cookie notices, and promotional prompts as one layer system. In call-only mode, use one floating call control and no competing dock or launcher. When an assistant is justified, show no more than one nonessential floating control above the primary call/text dock, collapse it to an icon-sized launcher, and test the open panel at 390px or narrower.
 
 Do not auto-open chat over first-viewport copy or emergency controls. Do not show a separate timed call popup when the page already has a call-first assistant. Respect safe areas and keyboard appearance.
 
@@ -80,6 +93,6 @@ Keep the call link immediately usable. Disable large movement and continuous eff
 
 ## Measure without collecting excess data
 
-Useful events include call click placement, text click placement, assistant open, assistant category choice, form start, validation failure category, form delivery success, and service-area check. Avoid logging field values, exact addresses, phone numbers, emails, or message bodies.
+Useful events include call click placement, text click placement, assistant open (when present), assistant category choice (when present), form start, validation failure category, form delivery success, and service-area check. Avoid logging field values, exact addresses, phone numbers, emails, or message bodies.
 
 Verify event names and destinations in a non-production environment when possible. Analytics must fail open without blocking calls, forms, navigation, or assistant state.

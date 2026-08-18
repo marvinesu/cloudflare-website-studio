@@ -133,7 +133,7 @@ Keep core copy and navigation visible without animation JavaScript. Enhance prog
 
 Do not stop at an attractive brochure that only displays information. For lead-generation work, make the primary user action immediately operable and add only the interaction paths the business can actually service. Follow [conversion-systems.md](references/conversion-systems.md).
 
-For urgent local services, keep `tel:` access persistent and let any assistant or chatbot qualify the situation before returning the visitor to a call. A scripted decision assistant is often safer and faster than a generative chat experience. It must disclose its limits, avoid estimates and availability promises, never request credentials or access codes, and preserve a direct call path at every state.
+For urgent local services, keep `tel:` access persistent. Choose the smallest conversion surface that matches the operator's workflow: when calls are primary or the user says “no chatbot,” ship one accessible floating call control and no chat UI; do not add a chatbot by default. Use a scripted decision assistant only when qualification measurably reduces confusion. Any assistant must disclose its limits, avoid estimates and availability promises, never request credentials or access codes, and preserve a direct call path at every state.
 
 For scheduled work, use a short server-validated form with explicit consent, abuse controls, honest success/failure messages, and verified delivery. Prefer a narrow Cloudflare Worker endpoint. Use Cloudflare Email Service `send_email` bindings only after the sender domain and destination are verified; otherwise keep the form disabled or fail closed rather than claiming delivery.
 
