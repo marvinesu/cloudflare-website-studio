@@ -96,6 +96,12 @@ def main() -> int:
         }
         missing_plan = sorted(name for name in required_plan if not (plan / name).is_file())
         check("local-service-plan", not missing_plan, f"missing website-plan artifacts: {missing_plan or 'none'}", "error")
+        has_phone_action = bool(re.search(r'href\s*=\s*[{"]?[^\n>]*tel:', corpus, re.I))
+        has_form = bool(re.search(r'<form\b', corpus, re.I))
+        check("local-service-primary-action", has_phone_action or has_form, "call or lead-form conversion path required", "error")
+        if has_form:
+            has_server_delivery = bool(re.search(r'/api/|send_email|lead_webhook|pages/functions|worker/', lower, re.I))
+            check("lead-form-server-delivery", has_server_delivery, "lead forms require a server-side delivery path", "error")
     crawlable_links = len(re.findall(r"<a\s+[^>]*href\s*=", corpus, re.I))
     check("crawlable-internal-links", crawlable_links > 0, f"found {crawlable_links} crawlable anchor implementation(s)")
 

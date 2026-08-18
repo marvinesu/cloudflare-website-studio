@@ -37,13 +37,13 @@ Read only the references needed for the task, but always read every reference ma
 
 | Mode | Required references |
 | --- | --- |
-| Create or redesign | [visual-design.md](references/visual-design.md), [motion.md](references/motion.md), [content-seo.md](references/content-seo.md), [qa-release.md](references/qa-release.md) |
+| Create or redesign | [visual-design.md](references/visual-design.md), [motion.md](references/motion.md), [content-seo.md](references/content-seo.md), [conversion-systems.md](references/conversion-systems.md), [qa-release.md](references/qa-release.md) |
 | Improve an existing site | Same as create, plus [workflow.md](references/workflow.md) |
 | WordPress migration | [migration.md](references/migration.md), [cloudflare-platform.md](references/cloudflare-platform.md), [content-seo.md](references/content-seo.md), [qa-release.md](references/qa-release.md) |
 | Cloudflare setup or deployment | [cloudflare-platform.md](references/cloudflare-platform.md), [qa-release.md](references/qa-release.md) |
 | Copy or SEO work | [content-seo.md](references/content-seo.md) |
 | Animation work | [motion.md](references/motion.md) |
-| Local-service business | [local-service-growth.md](references/local-service-growth.md), [content-seo.md](references/content-seo.md), [visual-design.md](references/visual-design.md), [motion.md](references/motion.md), [qa-release.md](references/qa-release.md) |
+| Local-service business | [local-service-growth.md](references/local-service-growth.md), [content-seo.md](references/content-seo.md), [conversion-systems.md](references/conversion-systems.md), [visual-design.md](references/visual-design.md), [motion.md](references/motion.md), [qa-release.md](references/qa-release.md) |
 
 Consult [sources.md](references/sources.md) when updating this skill or resolving provenance.
 
@@ -118,11 +118,20 @@ Preserve a strong existing brand. Otherwise create a compact token system for ty
 3. Tokens, typography, layout, navigation, footer, forms, and reusable primitives
 4. Route families and responsive composition
 5. Cloudflare runtime endpoints and bindings
-6. Professional motion system and signature interaction
-7. Accessibility, resilience, performance, and SEO validation
-8. Preview deployment, production cutover, verification, and rollback evidence
+6. Conversion interactions, call/chat/form routing, and honest delivery states
+7. Professional motion system and signature interaction
+8. Accessibility, resilience, performance, and SEO validation
+9. Preview deployment, production cutover, verification, and rollback evidence
 
 Keep core copy and navigation visible without animation JavaScript. Enhance progressively.
+
+## Build an active conversion surface
+
+Do not stop at an attractive brochure that only displays information. For lead-generation work, make the primary user action immediately operable and add only the interaction paths the business can actually service. Follow [conversion-systems.md](references/conversion-systems.md).
+
+For urgent local services, keep `tel:` access persistent and let any assistant or chatbot qualify the situation before returning the visitor to a call. A scripted decision assistant is often safer and faster than a generative chat experience. It must disclose its limits, avoid estimates and availability promises, never request credentials or access codes, and preserve a direct call path at every state.
+
+For scheduled work, use a short server-validated form with explicit consent, abuse controls, honest success/failure messages, and verified delivery. Prefer a narrow Cloudflare Worker endpoint. Use Cloudflare Email Service `send_email` bindings only after the sender domain and destination are verified; otherwise keep the form disabled or fail closed rather than claiming delivery.
 
 ## Enforce a professional motion pass
 
