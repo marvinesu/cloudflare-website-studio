@@ -46,6 +46,20 @@ Use ease-out for entry/exit, ease-in-out for movement/morphing, ease for simple 
 
 Do not add a large animation library for a fade. Reuse a library already in the project when appropriate.
 
+## Evaluate references and third-party assets
+
+Treat a reference site as a design problem to analyze, not a component to clone. Extract the narrative structure, pacing, spatial behavior, and interaction purpose; then implement an original composition with project content and tokens.
+
+Before adding external code, icons, Lottie JSON, Rive files, videos, fonts, or motion presets:
+
+1. Open the original source and current license. Do not infer permission from “free,” a demo page, or public source visibility.
+2. Record source URL, author/package, pinned version or retrieval date, license, required attribution, local files, modifications, and final credit location in `website-plan/motion-license-ledger.md`.
+3. Prefer local, versioned assets over runtime third-party embeds. Do not hotlink an animation library or asset unless the privacy, availability, CSP, and performance tradeoff is approved.
+4. Do not redistribute assets whose license permits end-use but prohibits template or library redistribution. A reusable skill may document the workflow without bundling the asset.
+5. If provenance or permission is unclear, reproduce only the high-level idea with original CSS, SVG, canvas, or generated media.
+
+For Lottie, inspect JSON size, image/font dependencies, renderer, autoplay/loop behavior, and accessible fallback. Lazy-load below-the-fold players, pause them offscreen and when the document is hidden, and avoid a player dependency for a small icon that CSS or SVG can express. For animated icons, retain a text label or accessible name and keep state meaning available without movement.
+
 ## Create distinct motion categories
 
 ### Hero choreography
@@ -74,6 +88,8 @@ Use subtle press scale around `0.97`, visible focus, and honest loading/success/
 
 Create at most one dominant interaction per page: scroll-driven product explanation, sticky stack, comparison reveal, controlled horizontal narrative, pointer-responsive material, or spatial transition. Tie it to the message, not fashion.
 
+For scroll stories, keep the primary CTA outside the pinned sequence, make each chapter reachable as semantic HTML, avoid scroll-jacking, and preserve a readable stacked flow when motion is reduced or JavaScript fails. On small screens, verify sticky scenes do not collide with mobile docks, assistants, browser chrome, or the on-screen keyboard.
+
 ## Engineering rules
 
 - Prefer transform and opacity. Use clip-path deliberately. Avoid animating width, height, margin, padding, top, or left except justified cases such as measured accordions.
@@ -84,6 +100,8 @@ Create at most one dominant interaction per page: scroll-driven product explanat
 - Use direct transforms for performance; avoid high-frequency inherited CSS variable updates across large subtrees.
 - Pause continuous effects offscreen and when the document is hidden.
 - Clean up observers, listeners, timers, RAF loops, ScrollTriggers, split text, and animation instances across route changes.
+- Give scroll and pointer effects an explicit input boundary; do not hijack wheel/touch navigation or make content depend on hover.
+- Budget third-party motion separately from core page JavaScript. Record compressed player, asset, and media weight; reject an effect whose cost is disproportionate to its communication value.
 - Test animations under CPU load and inspect uncertain motion at 2-5x duration or frame by frame.
 
 ## Reduced motion and static resilience
@@ -92,4 +110,4 @@ Core content must be visible before JavaScript and if initialization fails. Unde
 
 ## Acceptance report
 
-Report the declared motion level, purpose of each category, tokens/tools used, rejected candidates, and results for first load, repeated navigation, interruption, exit, mobile, touch, reduced motion, no-JavaScript visibility, and cleanup.
+Report the declared motion level, purpose of each category, tokens/tools used, asset/license ledger, bundle cost, rejected candidates, and results for first load, repeated navigation, interruption, exit, mobile, touch, reduced motion, no-JavaScript visibility, background/offscreen pausing, and cleanup.

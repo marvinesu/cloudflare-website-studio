@@ -25,6 +25,7 @@ website-plan/
   content-briefs/
   design-direction.md
   motion-plan.md
+  motion-license-ledger.md
   cloudflare-release.md
   qa-report.md
 ```
@@ -37,13 +38,13 @@ Read only the references needed for the task, but always read every reference ma
 
 | Mode | Required references |
 | --- | --- |
-| Create or redesign | [visual-design.md](references/visual-design.md), [motion.md](references/motion.md), [content-seo.md](references/content-seo.md), [conversion-systems.md](references/conversion-systems.md), [qa-release.md](references/qa-release.md) |
+| Create or redesign | [visual-design.md](references/visual-design.md), [design-assets.md](references/design-assets.md), [motion.md](references/motion.md), [content-seo.md](references/content-seo.md), [conversion-systems.md](references/conversion-systems.md), [qa-release.md](references/qa-release.md) |
 | Improve an existing site | Same as create, plus [workflow.md](references/workflow.md) |
 | WordPress migration | [migration.md](references/migration.md), [cloudflare-platform.md](references/cloudflare-platform.md), [content-seo.md](references/content-seo.md), [qa-release.md](references/qa-release.md) |
 | Cloudflare setup or deployment | [cloudflare-platform.md](references/cloudflare-platform.md), [qa-release.md](references/qa-release.md) |
 | Copy or SEO work | [content-seo.md](references/content-seo.md) |
 | Animation work | [motion.md](references/motion.md) |
-| Local-service business | [local-service-growth.md](references/local-service-growth.md), [content-seo.md](references/content-seo.md), [conversion-systems.md](references/conversion-systems.md), [visual-design.md](references/visual-design.md), [motion.md](references/motion.md), [qa-release.md](references/qa-release.md) |
+| Local-service business | [local-service-growth.md](references/local-service-growth.md), [content-seo.md](references/content-seo.md), [conversion-systems.md](references/conversion-systems.md), [visual-design.md](references/visual-design.md), [design-assets.md](references/design-assets.md), [motion.md](references/motion.md), [qa-release.md](references/qa-release.md) |
 
 Consult [sources.md](references/sources.md) when updating this skill or resolving provenance.
 
@@ -111,17 +112,20 @@ Signature idea: ...
 
 Preserve a strong existing brand. Otherwise create a compact token system for type, color, spacing, radii, shadows, layers, and motion. Make the site recognizable without its logo. If the design could be swapped onto an unrelated startup unchanged, it is not finished.
 
+Use icons as a coherent wayfinding layer, not decoration. Choose one family and weight, map icons to stable meanings, keep them secondary to text, mark decorative icons as hidden from assistive technology, and record the source, version, license, and required credit. For Flaticon UIcons, follow [design-assets.md](references/design-assets.md); keep a visible attribution link unless a recorded paid license removes that requirement.
+
 ## Build in this order
 
 1. Content truth, route model, and primary conversion path
 2. Semantic initial HTML, metadata, schema, sitemap, robots, redirects, and 404
 3. Tokens, typography, layout, navigation, footer, forms, and reusable primitives
 4. Route families and responsive composition
-5. Cloudflare runtime endpoints and bindings
-6. Conversion interactions, call/chat/form routing, and honest delivery states
-7. Professional motion system and signature interaction
-8. Accessibility, resilience, performance, and SEO validation
-9. Preview deployment, production cutover, verification, and rollback evidence
+5. Licensed image and icon integration with attribution ledger
+6. Cloudflare runtime endpoints and bindings
+7. Conversion interactions, call/chat/form routing, and honest delivery states
+8. Professional motion system and signature interaction
+9. Accessibility, resilience, performance, and SEO validation
+10. Preview deployment, production cutover, verification, and rollback evidence
 
 Keep core copy and navigation visible without animation JavaScript. Enhance progressively.
 
@@ -140,6 +144,8 @@ For marketing, portfolio, and service websites, do not finish with only generic 
 An expressive pass must address at least three distinct categories supported by the page: hero choreography, navigation/menu transitions, section or media reveals, CTA feedback, card/media interaction, typography treatment, state transitions, or one signature story-driven interaction. Repeated copies of one reveal count once.
 
 Name the purpose of every animation: feedback, spatial continuity, state indication, preventing a jarring change, explanation, or rare delight. Reject motion that cannot name a purpose. Ship hover gating, interruption behavior, cleanup, and a meaningful reduced-motion variant with the implementation.
+
+Treat CodePen, portfolio sites, animation galleries, LottieFlow, UseAnimations, and similar sources as references—not permission to copy. Rebuild the concept in the project’s own visual language unless the exact asset or code has a verified redistributable license. Record source URL, creator/package, version or retrieval date, license, modifications, attribution location, and whether code/assets were copied or only studied in `motion-license-ledger.md`. Follow the selection, licensing, performance, and fallback rules in [motion.md](references/motion.md).
 
 ## Write for humans and search engines
 

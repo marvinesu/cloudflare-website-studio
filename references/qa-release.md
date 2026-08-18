@@ -45,6 +45,9 @@ Use [quality-scorecard.md](quality-scorecard.md) for the final scored decision. 
 - Interruption, repeated triggers, exits, client navigation cleanup, and background/offscreen behavior tested
 - Reduced-motion variant preserves content and state comprehension
 - Core HTML stays visible if JavaScript or animation initialization fails
+- Third-party motion code/assets have a current source, version or retrieval date, license, modification note, and visible attribution where required
+- Scroll stories do not hijack wheel/touch input; semantic chapters remain readable and the primary CTA stays operable outside the pinned sequence
+- Lottie/Rive/video players are locally controlled where practical, size-budgeted, lazy below the fold, paused offscreen/background, and replaced by a meaningful fallback
 
 ## Runtime and security
 
