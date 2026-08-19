@@ -126,7 +126,9 @@ def main() -> int:
     check("no-transition-all", transition_all == 0, f"found {transition_all} transition: all occurrence(s)")
     check("no-scale-zero-entry", scale_zero == 0, f"found {scale_zero} scale(0) occurrence(s); review entry animations")
     check("reduced-motion", "prefers-reduced-motion" in lower, "intentional reduced-motion behavior found")
-    third_party_motion = bool(re.search(r"lottie|dotlottie|rive|gsap|scrolltrigger", lower, re.I))
+    third_party_motion = bool(
+        re.search(r"\b(?:dotlottie|lottie|rive|gsap|scrolltrigger)\b", lower, re.I)
+    )
     motion_ledger = root / "website-plan" / "motion-license-ledger.md"
     check("motion-license-ledger", not third_party_motion or motion_ledger.is_file(), "third-party motion requires website-plan/motion-license-ledger.md")
 
