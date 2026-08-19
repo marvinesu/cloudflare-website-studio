@@ -87,12 +87,24 @@ def main() -> int:
     check("description", "description" in lower, "meta description implementation found")
     check("canonical", "canonical" in lower, "canonical URL implementation found")
     check("structured-data", "application/ld+json" in lower or "schema.org" in lower, "structured data implementation found")
+    check("document-language", bool(re.search(r"<html\b[^>]*\blang\s*=", corpus, re.I)), "document language declared")
+    check("responsive-viewport", bool(re.search(r'<meta\b[^>]*name\s*=\s*["\']viewport["\']', corpus, re.I)), "responsive viewport declared")
+    check("main-landmark", bool(re.search(r"<main\b", corpus, re.I)), "main landmark found")
+    check("skip-link", bool(re.search(r'<a\b[^>]*href\s*=\s*["\']#[^"\']+["\'][^>]*>[^<]*(?:skip|main|content)', corpus, re.I)), "keyboard bypass link found")
+    check("focus-visible", ":focus-visible" in lower or "focus-visible" in lower, "visible keyboard focus treatment found")
+    outline_suppression = len(re.findall(r"outline\s*:\s*(?:0|none)\b", corpus, re.I))
+    check("no-unreplaced-focus-suppression", outline_suppression == 0 or ":focus" in lower, f"found {outline_suppression} outline suppression occurrence(s); verify each has a visible replacement")
+    accessibility_preferences = "a11y-preferences" in lower or "accessibility settings" in lower
+    check("first-party-accessibility-menu", accessibility_preferences, "first-party accessibility preference control found; do not substitute an overlay script")
+    accessibility_overlays = re.findall(r"accessibe|userway|accessiway|equalweb", lower, re.I)
+    check("no-accessibility-overlay", not accessibility_overlays, f"third-party accessibility overlay references: {sorted(set(accessibility_overlays)) or 'none'}", "error")
     if args.local_service:
         check("local-business-entity", "localbusiness" in lower or "organization" in lower, "verified Organization/LocalBusiness entity markup required for local-service mode")
         plan = root / "website-plan"
         required_plan = {
             "fact-claim-ledger.md", "research-notes.md", "keyword-page-map.csv",
             "question-bank.md", "url-internal-link-map.csv", "location-qualification.csv",
+            "accessibility-plan.md",
         }
         missing_plan = sorted(name for name in required_plan if not (plan / name).is_file())
         check("local-service-plan", not missing_plan, f"missing website-plan artifacts: {missing_plan or 'none'}", "error")

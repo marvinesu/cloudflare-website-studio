@@ -24,6 +24,7 @@ website-plan/
   location-qualification.csv
   content-briefs/
   design-direction.md
+  accessibility-plan.md
   motion-plan.md
   motion-license-ledger.md
   cloudflare-release.md
@@ -38,13 +39,14 @@ Read only the references needed for the task, but always read every reference ma
 
 | Mode | Required references |
 | --- | --- |
-| Create or redesign | [visual-design.md](references/visual-design.md), [design-assets.md](references/design-assets.md), [motion.md](references/motion.md), [content-seo.md](references/content-seo.md), [conversion-systems.md](references/conversion-systems.md), [qa-release.md](references/qa-release.md) |
+| Create or redesign | [visual-design.md](references/visual-design.md), [design-assets.md](references/design-assets.md), [motion.md](references/motion.md), [accessibility.md](references/accessibility.md), [content-seo.md](references/content-seo.md), [conversion-systems.md](references/conversion-systems.md), [qa-release.md](references/qa-release.md) |
 | Improve an existing site | Same as create, plus [workflow.md](references/workflow.md) |
-| WordPress migration | [migration.md](references/migration.md), [cloudflare-platform.md](references/cloudflare-platform.md), [content-seo.md](references/content-seo.md), [qa-release.md](references/qa-release.md) |
-| Cloudflare setup or deployment | [cloudflare-platform.md](references/cloudflare-platform.md), [qa-release.md](references/qa-release.md) |
+| WordPress migration | [migration.md](references/migration.md), [cloudflare-platform.md](references/cloudflare-platform.md), [content-seo.md](references/content-seo.md), [accessibility.md](references/accessibility.md), [qa-release.md](references/qa-release.md) |
+| Cloudflare setup or deployment | [cloudflare-platform.md](references/cloudflare-platform.md), [accessibility.md](references/accessibility.md), [qa-release.md](references/qa-release.md) |
 | Copy or SEO work | [content-seo.md](references/content-seo.md) |
 | Animation work | [motion.md](references/motion.md) |
-| Local-service business | [local-service-growth.md](references/local-service-growth.md), [content-seo.md](references/content-seo.md), [conversion-systems.md](references/conversion-systems.md), [visual-design.md](references/visual-design.md), [design-assets.md](references/design-assets.md), [motion.md](references/motion.md), [qa-release.md](references/qa-release.md) |
+| Accessibility work | [accessibility.md](references/accessibility.md), [qa-release.md](references/qa-release.md) |
+| Local-service business | [local-service-growth.md](references/local-service-growth.md), [content-seo.md](references/content-seo.md), [conversion-systems.md](references/conversion-systems.md), [visual-design.md](references/visual-design.md), [design-assets.md](references/design-assets.md), [motion.md](references/motion.md), [accessibility.md](references/accessibility.md), [qa-release.md](references/qa-release.md) |
 
 Consult [sources.md](references/sources.md) when updating this skill or resolving provenance.
 
@@ -123,11 +125,18 @@ Use icons as a coherent wayfinding layer, not decoration. Choose one family and 
 5. Licensed image and icon integration with attribution ledger
 6. Cloudflare runtime endpoints and bindings
 7. Conversion interactions, call/chat/form routing, and honest delivery states
-8. Professional motion system and signature interaction
-9. Accessibility, resilience, performance, and SEO validation
-10. Preview deployment, production cutover, verification, and rollback evidence
+8. Semantic accessibility, keyboard/focus behavior, form announcements, and first-party preference controls
+9. Professional motion system and signature interaction with pause/reduced-motion behavior
+10. Accessibility, resilience, performance, and SEO validation
+11. Preview deployment, production cutover, verification, and rollback evidence
 
 Keep core copy and navigation visible without animation JavaScript. Enhance progressively.
+
+## Build accessibility in; never overlay it
+
+Target WCAG 2.2 AA unless a stricter requirement applies. Follow [accessibility.md](references/accessibility.md) while building semantics, keyboard behavior, focus, reflow, contrast, forms, dialogs, media, motion, and floating layers. Do not postpone accessibility until QA.
+
+For marketing and lead-generation sites, ship the documented first-party accessibility menu by default unless an equivalent approved control exists or the owner declines it. It must persist preferences without a flash, work across client navigation, expose state to assistive technology, support keyboard/Escape/focus return, and include text size, contrast, readable font, link highlighting, motion pause, and reset. Never add third-party accessibility overlay scripts. The menu supplements accessible implementation and is not evidence of WCAG conformance by itself.
 
 ## Build an active conversion surface
 

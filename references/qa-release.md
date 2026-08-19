@@ -37,6 +37,18 @@ Use [quality-scorecard.md](quality-scorecard.md) for the final scored decision. 
 - Images have correct crop, dimensions, loading behavior, and alt treatment
 - Empty, loading, success, error, and long-content states are intentional
 
+## Accessibility
+
+- WCAG target and exceptions are recorded in `website-plan/accessibility-plan.md`
+- Document language, landmarks, heading order, skip link, labels, names, descriptions, and status announcements pass
+- Keyboard order follows the interface; focus is visible, returns after dialogs, and is not obscured by sticky/floating layers
+- Navigation, primary CTA, forms, sliders, dialogs, maps, and media operate without dragging, hover, or touch-only gestures
+- 320 CSS px reflow, 200% zoom, increased text spacing, contrast, non-color state cues, and target sizing pass
+- Automatic motion can be paused when required; reduced-motion behavior preserves content and comprehension
+- First-party accessibility preferences apply before paint, persist after reload/navigation, combine safely, and reset correctly
+- No third-party accessibility overlay or badge script is present
+- Automated findings are reviewed manually; a passing scanner is not reported as WCAG conformance
+
 ## Motion
 
 - Motion level and purposes documented
@@ -71,4 +83,4 @@ Use [quality-scorecard.md](quality-scorecard.md) for the final scored decision. 
 - Rollback target and procedure are recorded and executable
 - Rollback compatibility with current data schemas and bound resources is proven; gradual releases include skew tests and stop conditions when used
 
-Do not declare completion from upload logs, a single screenshot, a `200` form response, or one CDN point of presence.
+Do not declare completion from upload logs, a single screenshot, a passing automated accessibility scan, a `200` form response, or one CDN point of presence.

@@ -19,7 +19,7 @@ Score each dimension from 0 to 4:
 | Visual design | Recognizable direction, tokens, typography, composition, imagery, responsive states |
 | Motion | Purpose, variety, timing, interruption, cleanup, hover gating, reduced-motion behavior |
 | SEO and AI discovery | Crawlable HTML, unique metadata, canonicals, schema truth, sitemap/robots, crawler policy |
-| Accessibility and performance | Keyboard, focus, zoom, contrast, touch, image/loading behavior, performance evidence |
+| Accessibility and performance | WCAG target, semantic HTML, keyboard/focus, 320px reflow, 200% zoom, contrast, touch, preference controls, image/loading behavior, performance evidence |
 | Cloudflare security and operations | Runtime choice, bindings, secrets, forms, abuse controls, logs, version and rollback |
 | Production verification | Canonical host, representative routes, form delivery, headers, errors, release record |
 
@@ -27,6 +27,6 @@ Score each dimension from 0 to 4:
 
 Preview release requires every applicable dimension to score at least 2 and no blocking defect. Production completion requires at least 30/40 overall, every applicable dimension at least 3, and direct production evidence. Mark an inapplicable dimension `N/A` and calculate the percentage against the available maximum; the production threshold remains 75%.
 
-Blocking defects include fabricated or unapproved claims, exposed secrets, broken primary conversion, inaccessible critical controls, indexable preview environments, thin doorway pages, incorrect canonical/redirect behavior, failed server-side Turnstile validation, unverified form delivery, or an unexecutable rollback.
+Blocking defects include fabricated or unapproved claims, exposed secrets, broken primary conversion, inaccessible critical controls, focus trapped or obscured in a conversion path, indexable preview environments, thin doorway pages, incorrect canonical/redirect behavior, failed server-side Turnstile validation, unverified form delivery, or an unexecutable rollback.
 
 Record the score, evidence link, owner, and remediation for every dimension in `website-plan/qa-report.md`. A score is a decision aid, not a substitute for the detailed gates in `qa-release.md`.

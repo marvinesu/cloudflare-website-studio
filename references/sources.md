@@ -13,6 +13,10 @@ Research snapshot: 2026-08-18.
 | [devloop01/voyage-slider](https://github.com/devloop01/voyage-slider) | package reviewed 2026-08-18 | ISC | Reference analysis for spatial card choreography; implementation remained original and project-specific |
 | [Finsweet LottieFlow](https://finsweet.com/lottieflow/) | site reviewed 2026-08-18 | Verify per selected asset | Motion pattern discovery; do not bundle until the exact asset license and attribution terms are recorded |
 | [useAnimations](https://useanimations.com/) | site and terms reviewed 2026-08-18 | CC BY for free files; verify current terms | Animated icon evaluation, accessible labeling, attribution, and no redistribution in reusable templates |
+| [W3C WCAG 2.2](https://www.w3.org/TR/WCAG22/) | Recommendation reviewed 2026-08-18 | W3C document license | AA baseline, reflow, contrast, focus, target size, dragging alternatives, forms, motion, and status requirements |
+| [WAI-ARIA APG modal dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) | guidance reviewed 2026-08-18 | W3C document license | Dialog naming, initial focus, focus containment, Escape, close control, and focus return |
+| [W3C Pause, Stop, Hide](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide) | guidance reviewed 2026-08-18 | W3C document license | Persistent pause/stop/hide mechanism for qualifying automatic motion and updates |
+| [W3C Focus Not Obscured](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum) | guidance reviewed 2026-08-18 | W3C document license | Sticky, floating, notification, and dialog collision testing for keyboard focus |
 
 Current platform guidance was checked against official Cloudflare Workers/Pages documentation, Google Search Central, Bing Webmaster Guidelines/IndexNow, and OpenAI publisher crawler guidance. Links are kept in the relevant references.
 
