@@ -115,6 +115,17 @@ Do not enable cross-version caching without an explicit invalidation plan. Durin
 7. Inspect Workers Logs or `wrangler tail` for exceptions and sample deliberately. Never emit secrets or raw personal form data. Correlate failures to Worker version when multiple versions are live.
 8. Roll back immediately when critical routes, forms, security, or canonical behavior fail. A code rollback does not roll back D1 migrations or recreate deleted/changed KV, R2, Queue, or Durable Object resources; prove data and binding compatibility before declaring the rollback executable.
 
+For an exact Workers release, prefer this evidence chain:
+
+1. Commit the code that will be released and record the SHA.
+2. Build once without overlapping dev/build processes; verify the expected route and asset counts before upload.
+3. Deploy that artifact to a noindex preview. If a version alias is stale or client-blocked, deploy an isolated preview Worker with no production custom-domain route.
+4. Verify representative routes, unknown-route status, API method failures, security/robots headers, critical assets, mobile layout, and the primary interaction without submitting a real lead unless approved.
+5. Upload/tag the production Worker version with the SHA, promote the intended allocation, then synchronize triggers/custom domains.
+6. Repeat the same checks on the custom domain and record the active version plus the previously active compatible rollback version.
+
+Never deploy from a partial `dist` directory. After any interrupted or concurrent build, rebuild cleanly and confirm the complete artifact count before preview or production upload.
+
 ## Official references
 
 - https://developers.cloudflare.com/workers/static-assets/

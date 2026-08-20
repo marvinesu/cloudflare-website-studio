@@ -24,6 +24,12 @@ Do not copy individual Flaticon assets into reusable templates or redistribute t
 
 For stock, client-supplied, generated, or commissioned imagery, record source and permitted use. Generated images may illustrate a service category but must not be presented as a completed job, employee, storefront, vehicle, certification, or other documentary proof unless that claim is true and approved.
 
+For a redesign or migration, compare the source's image cadence by route family. Preserve owned documentary media and its business context; add original or licensed editorial imagery only where it improves comprehension. Produce intentional desktop and mobile crops instead of forcing one wide image into every aspect ratio.
+
+Record generated-image prompts, generation mode/tool, source output path, optimized project paths, dimensions, and intended non-documentary use. Avoid readable brand marks, private data, fake proof, or near-duplicates across different businesses.
+
+Treat critical assets as release dependencies. Request the logo, hero image, fonts, and at least one route-family image through both the preview hostname and custom domain, then confirm browser rendering. A `200` response is not enough when a browser or client filter can block a filename; if `naturalWidth` is zero while direct HTTP succeeds, rename the asset to a neutral owned filename, update references, rebuild, and retest.
+
 ## QA
 
 - Confirm icons render at representative desktop and narrow-mobile widths.

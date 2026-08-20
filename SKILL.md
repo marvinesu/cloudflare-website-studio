@@ -24,6 +24,7 @@ website-plan/
   location-qualification.csv
   content-briefs/
   design-direction.md
+  source-comparison.md
   accessibility-plan.md
   motion-plan.md
   motion-license-ledger.md
@@ -65,7 +66,7 @@ Before changing code:
 1. Read repository instructions and inspect Git status, stack, commands, routes, content sources, design tokens, current motion, and Cloudflare configuration.
 2. Identify the business, real audience, primary user action, canonical domain, target markets, approved claims, measurable success, scope, and non-goals.
 3. Record the Cloudflare account/project/Worker, production branch, preview strategy, custom domains, bindings, secrets, DNS dependencies, and rollback target.
-4. For existing sites, capture representative desktop and narrow-mobile states and inspect at least one page from every route family.
+4. For existing sites, capture representative desktop and narrow-mobile states, inventory routes/sections/navigation/forms/media/social links, inspect at least one page from every route family, and record what to preserve, improve, replace, or retire in `source-comparison.md`.
 5. For migrations, create an explicit URL map, feature inventory, claim matrix, media inventory, integration inventory, and DNS inventory.
 
 Never invent testimonials, clients, metrics, awards, locations, credentials, prices, guarantees, availability, or structured-data facts. Ask or omit.
@@ -146,6 +147,8 @@ For urgent local services, keep `tel:` access persistent. Choose the smallest co
 
 For scheduled work, use a short server-validated form with explicit consent, abuse controls, honest success/failure messages, and verified delivery. Prefer a narrow Cloudflare Worker endpoint. Use Cloudflare Email Service `send_email` bindings only after the sender domain and destination are verified; otherwise keep the form disabled or fail closed rather than claiming delivery.
 
+Keep one coherent lead flow per surface. Do not stack a vendor form, first-party form, and chatbot on the same page unless each has a documented distinct purpose. A qualification assistant should be manual, three short steps or fewer where practical, use the same server-validated endpoint as the primary form, disclose its limits, preserve a direct contact alternative, and never auto-open or steal focus.
+
 ## Enforce a professional motion pass
 
 For marketing, portfolio, and service websites, do not finish with only generic fade-up reveals. Declare `restrained`, `expressive`, or `cinematic` motion. Default to expressive unless the brand or use frequency calls for restraint.
@@ -176,7 +179,7 @@ Then run the project's format, lint, typecheck, tests, and production build. Ins
 
 For local-service projects, run `python scripts/site_preflight.py <project-root> --local-service`. Use `--strict` when every finding must block CI. Score the completed implementation with [quality-scorecard.md](references/quality-scorecard.md); a blocking defect fails release regardless of the total.
 
-Deploy to preview first. Verify the actual Cloudflare runtime, not only a framework dev server. Production completion requires the canonical URL, representative internal routes, API failures, real form delivery when approved, domain policy, security headers, logs/errors, active deployment/version, Git SHA, and rollback target.
+Deploy the exact committed build to a non-indexable preview first. Verify the actual Cloudflare runtime, not only a framework dev server. If a per-version preview alias is stale, blocked, or client-cached, use an isolated preview Worker with no production route and repeat the full check there. Production completion requires the canonical URL, representative internal routes, critical assets, API failures, real form delivery when approved, domain policy, security headers, logs/errors, active deployment/version, Git SHA, and rollback target.
 
 ## Report precisely
 

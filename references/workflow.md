@@ -6,6 +6,7 @@ For every gate, record inputs, actions, evidence, unresolved risks, and one of `
 
 - Read repository guidance and inspect the existing system before proposing a replacement.
 - Record routes, content types, design tokens, reusable components, integrations, analytics, forms, SEO data, and deployment configuration.
+- For an existing public site, inventory its route families, header/footer links, section order, forms, social destinations, media density, typography, color, and strongest conversion moment. Save matched desktop and narrow-mobile evidence in `website-plan/source-comparison.md`.
 - For WordPress, export through read-only REST, XML, or owner-provided backups. Sanitize HTML and separate immutable raw data from normalized content.
 
 **Pass:** scope, source of truth, business facts, existing system, authority, exclusions, and rollback are recorded without unsupported claims.
@@ -25,6 +26,7 @@ For every gate, record inputs, actions, evidence, unresolved risks, and one of `
 - Write a one-paragraph design direction and a compact token system.
 - Plan page hierarchy and responsive behavior before styling individual sections.
 - On redesigns, distinguish what to preserve, refine, replace, and remove.
+- Compare source and rebuild at matched routes and viewport sizes. A larger route count is not proof of a better site; preserve the source's strongest hierarchy, photography, business vocabulary, and lead moment while improving semantics, performance, accessibility, and maintainability.
 
 For local services, complete dated search research, keyword/page ownership, question bank, location qualification, and internal-link architecture before writing page copy.
 
@@ -47,6 +49,7 @@ Implement in vertical slices: one complete representative route family first, ve
 - Audit accessibility, responsiveness, robustness, performance, SEO, and edge cases.
 - Polish spacing, typography, color, imagery, component states, and motion only after structural problems are resolved.
 - Compare before and after at the same routes and viewport sizes.
+- Audit the current result against both the approved design direction and the source comparison. Fix losses in brand recognition, above-the-fold clarity, page depth, navigation reach, visual cadence, or conversion visibility before polishing micro-interactions.
 
 Run at least two distinct reviews: one for user/content/design quality and one for technical/runtime/SEO quality. Fix verified high-impact findings and rerun the affected checks.
 

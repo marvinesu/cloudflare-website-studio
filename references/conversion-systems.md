@@ -45,6 +45,20 @@ Never request lock codes, alarm credentials, passwords, payment data, identity d
 
 If a generative assistant is genuinely required, define retrieval sources, allowed claims, refusal boundaries, transcript retention, human escalation, cost limits, latency/failure behavior, and prompt-injection defenses before implementation.
 
+## Design a qualification assistant for scheduled work
+
+Use a first-party qualification assistant when a visible consultation path helps visitors describe a higher-consideration project.
+
+1. Open only after an explicit user action; never use a timer or automatic focus transfer.
+2. Keep the flow to three short steps where practical: need/stage, location/timing/details, then contact/consent.
+3. Use a native modal dialog with focus containment, Escape, a visible close control, and focus return, or deliberately use a non-modal panel without trapping focus. Do not mix the two patterns.
+4. Submit to the same server-validated endpoint and success/failure contract as the primary form.
+5. Require explicit contact consent and warn against sending payment data, identity documents, passwords, access codes, or credentials.
+6. Keep a call or email alternative visible in the introduction and failure state.
+7. Add multiple entry points when useful, but only one assistant instance and one data model.
+
+Do not render an embedded vendor form and a first-party lead form as competing primary surfaces. If both must exist, document the distinct audience and route for each and verify that only the intended one appears on each page.
+
 ## Build short forms that can be trusted
 
 Ask only for fields required to route and respond. For local services, a useful default is name, phone, optional email, service, city/ZIP or service address, timing, short description, and explicit contact consent.

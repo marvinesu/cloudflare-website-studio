@@ -64,6 +64,7 @@ def main() -> int:
     if wrangler:
         config_text = "\n".join(read_text(p) for p in wrangler)
         check("compatibility-date", "compatibility_date" in config_text, "Wrangler compatibility date declared")
+        check("preview-strategy", "preview_urls" in config_text, "explicit Workers preview URL strategy declared")
         check("no-deprecated-workers-sites", not re.search(r'(?m)^\s*(site\s*=|\[site\])', config_text), "Workers Sites configuration is deprecated")
 
     gitignore = read_text(root / ".gitignore")
@@ -108,12 +109,19 @@ def main() -> int:
         }
         missing_plan = sorted(name for name in required_plan if not (plan / name).is_file())
         check("local-service-plan", not missing_plan, f"missing website-plan artifacts: {missing_plan or 'none'}", "error")
+        check("source-comparison", (plan / "source-comparison.md").is_file(), "matched source/current audit for existing-site work; mark not applicable for net-new builds")
         has_phone_action = bool(re.search(r'href\s*=\s*[{"]?[^\n>]*tel:', corpus, re.I))
         has_form = bool(re.search(r'<form\b', corpus, re.I))
         check("local-service-primary-action", has_phone_action or has_form, "call or lead-form conversion path required", "error")
         if has_form:
             has_server_delivery = bool(re.search(r'/api/|send_email|lead_webhook|pages/functions|worker/', lower, re.I))
             check("lead-form-server-delivery", has_server_delivery, "lead forms require a server-side delivery path", "error")
+        assistant_files = [p for p in files if re.search(r"(?:assistant|chat)", p.name, re.I)]
+        assistant_text = "\n".join(read_text(p) for p in assistant_files).lower()
+        if assistant_files and "<form" in assistant_text:
+            check("lead-assistant-consent", "consent" in assistant_text, "lead-capture assistants require explicit contact consent", "error")
+            timed_open = bool(re.search(r"settimeout\s*\([^;]{0,600}(?:showmodal|\.click\s*\()", assistant_text, re.I | re.S))
+            check("lead-assistant-manual-open", not timed_open, "lead assistant must not auto-open or steal focus")
     crawlable_links = len(re.findall(r"<a\s+[^>]*href\s*=", corpus, re.I))
     check("crawlable-internal-links", crawlable_links > 0, f"found {crawlable_links} crawlable anchor implementation(s)")
 

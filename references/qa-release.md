@@ -26,6 +26,8 @@ Use [quality-scorecard.md](quality-scorecard.md) for the final scored decision. 
 - Intended AI/search crawlers are not accidentally blocked by robots.txt, Cloudflare WAF/bot rules, authentication, or JavaScript challenges
 - OAI-SearchBot and GPTBot policies are decided separately; IndexNow/AI discovery is never reported as a ranking or citation guarantee
 - Important pages passed source-pack, fact, voice, usefulness, rendered-web, and owner/domain review gates
+- Existing-site work includes a matched source-versus-current route/section/navigation/form/media comparison; high-value source strengths are preserved or intentionally replaced
+- Social destinations and business-directory links are source-verified; no profile URL is guessed from a business name
 - No separate AI-only copy, fake author/reviewer, automatically refreshed date, special AI schema, forced content chunking, or default `llms.txt` claim
 
 ## Visual and responsive
@@ -35,6 +37,8 @@ Use [quality-scorecard.md](quality-scorecard.md) for the final scored decision. 
 - No horizontal overflow, clipping, sticky/floating collisions, or hidden CTA
 - 200% zoom, keyboard order, focus, Escape, labels, errors, contrast, and touch targets pass
 - Images have correct crop, dimensions, loading behavior, and alt treatment
+- Logo, hero, font, and representative route-family images load through both preview and custom hosts and render with nonzero natural dimensions in the browser
+- Source and current pages are compared at matched desktop and narrow-mobile viewports; section count alone is not treated as visual quality evidence
 - Empty, loading, success, error, and long-content states are intentional
 
 ## Accessibility
@@ -68,6 +72,8 @@ Use [quality-scorecard.md](quality-scorecard.md) for the final scored decision. 
 - CORS and security headers match actual dependencies
 - Secrets exist in bindings, not source or client bundles
 - Forms show honest status and approved end-to-end delivery is observed
+- Each route exposes one intentional primary lead flow; duplicate vendor/first-party forms and competing chat/form overlays are absent or explicitly justified
+- Qualification assistants are manual, use a consistent server-validated data model, require consent, preserve direct contact fallback, and pass modal/non-modal keyboard behavior
 - Turnstile-protected forms validate tokens with Siteverify on the server, check configured hostname/action, and reject expired, reused, or failed tokens
 - Endpoint abuse controls, payload limits, and dependency fail-open/fail-closed behavior are documented and tested
 - Logs show no unaccounted exceptions; tracing/monitoring configured according to risk
@@ -78,6 +84,7 @@ Use [quality-scorecard.md](quality-scorecard.md) for the final scored decision. 
 - Canonical homepage and representative internal routes return intended content and assets
 - Apex/`www`, TLS, redirects, headers, and cache behavior are correct
 - Active deployment/version and Git SHA match intended release
+- The released version was built from the recorded commit, verified on a non-indexable preview, uploaded/tagged as that exact artifact, promoted with a known traffic allocation, and reverified after triggers/custom domains were synchronized
 - APIs and forms work on every served hostname
 - CDN/cache differences are distinguished from deployment failure using asset hashes and response headers
 - Rollback target and procedure are recorded and executable
