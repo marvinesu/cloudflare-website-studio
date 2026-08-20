@@ -24,6 +24,8 @@ Current platform guidance was checked against official Cloudflare Workers/Pages 
 
 The Email Service verification gate and `verify_email_binding.py` follow Cloudflare's current send-binding restrictions and Email Routing Addresses API. The script is an original standard-library implementation and does not vendor Cloudflare SDK code.
 
+The public-lead throttling gate follows Cloudflare's current [Workers Rate Limiting binding](https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/) documentation, including Wrangler version, namespace, locality, eventual-consistency, key-selection, and monitoring limitations.
+
 Resolve conflicts in this order:
 
 1. User instructions and approved business facts

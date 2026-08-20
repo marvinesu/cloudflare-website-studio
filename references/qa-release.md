@@ -76,7 +76,8 @@ Use [quality-scorecard.md](quality-scorecard.md) for the final scored decision. 
 - Each route exposes one intentional primary lead flow; duplicate vendor/first-party forms and competing chat/form overlays are absent or explicitly justified
 - Qualification assistants are manual, use a consistent server-validated data model, require consent, preserve direct contact fallback, and pass modal/non-modal keyboard behavior
 - Turnstile-protected forms validate tokens with Siteverify on the server, check configured hostname/action, and reject expired, reused, or failed tokens
-- Endpoint abuse controls, payload limits, and dependency fail-open/fail-closed behavior are documented and tested
+- Every public lead endpoint has a Wrangler `ratelimits` binding, calls it after field validation and before downstream delivery, returns `429` with `Retry-After`, and uses no isolate-local counter as the production control
+- Endpoint abuse controls, payload limits, stable privacy-preserving rate keys, namespace uniqueness, and dependency fail-open/fail-closed behavior are documented and tested
 - Logs show no unaccounted exceptions; tracing/monitoring configured according to risk
 - Logs and traces contain no secrets or unnecessary personal form data
 

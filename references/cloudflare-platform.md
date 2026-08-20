@@ -56,13 +56,16 @@ For each endpoint:
 - validate origin where same-origin behavior is expected;
 - validate content type, declared length, actual body size, fields, and consent;
 - sanitize output and never reflect untrusted HTML;
-- use Turnstile, rate limiting, timing, honeypot, or link-spam controls according to abuse risk;
+- use a native Cloudflare Rate Limiting binding on every public lead endpoint, invoked after field validation and before downstream delivery; use a stable privacy-preserving key, return `429` plus `Retry-After`, and never represent an isolate-local `Map` as durable platform throttling;
+- add Turnstile, timing, honeypot, or link-spam controls according to abuse risk;
 - set accurate CORS behavior, including `OPTIONS`, only when cross-origin access is required;
 - return honest failures and stable JSON error shapes;
 - use `ctx.waitUntil()` only for work safe to complete after the response;
 - never claim email or downstream success until delivery is observed or durably queued.
 
 For every Turnstile-protected endpoint, server-side Siteverify validation is mandatory. Treat tokens as single-use and five-minute-lived; reject failed, expired, or replayed tokens. Verify the expected hostname and action when configured, keep the secret server-side, and use one idempotency key across retries of the same validation request. Use separate widgets and secrets for development, staging, and production. Turnstile is one abuse signal, not a replacement for payload limits, endpoint rate controls, and downstream spam defenses.
+
+Cloudflare Rate Limiting bindings require Wrangler 4.36 or later. Give each independent Worker a unique positive-integer `namespace_id`; bindings that share a namespace share counters for the same key. The API is local to a Cloudflare location and eventually consistent, so describe it as abuse resistance rather than exact accounting. Avoid raw IP keys when legitimate users may share networks. Prefer a normalized contact/user identifier hashed with Web Crypto, and call the binding only after validation so a corrected invalid submission is not immediately throttled.
 
 ## Bindings and storage
 

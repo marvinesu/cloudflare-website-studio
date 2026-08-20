@@ -69,7 +69,9 @@ Client-side validation improves usability but never replaces server validation. 
 - enforce content type and byte limits before parsing;
 - normalize and bound every field;
 - reject invalid phone/email formats and missing consent;
-- use a honeypot, elapsed-time check, and platform rate limiting or Turnstile based on abuse risk;
+- use honeypot and elapsed-time controls where appropriate, plus a native Cloudflare Rate Limiting binding on every public lead endpoint;
+- invoke the rate limiter after field validation and before delivery, use a privacy-preserving stable key, return `429` with `Retry-After`, and do not substitute isolate-memory counters;
+- add Turnstile when abuse risk warrants it and both client tokens and server-side Siteverify can be configured and tested;
 - redact personal fields from logs;
 - return stable, honest error messages with a call fallback;
 - redirect or render a real success state only after downstream delivery succeeds or durable queuing is confirmed.

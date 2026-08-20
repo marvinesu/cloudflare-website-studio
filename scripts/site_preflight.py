@@ -59,6 +59,7 @@ def main() -> int:
             check("package-json-valid", False, f"cannot parse package.json: {exc}", "error")
 
     wrangler = find_named(root, {"wrangler.jsonc", "wrangler.json", "wrangler.toml"})
+    config_text = ""
     pages_files = find_named(root, {"_routes.json", "_redirects", "_headers"})
     check("cloudflare-config", bool(wrangler or pages_files), "Wrangler or Pages configuration discovered")
     if wrangler:
@@ -99,6 +100,18 @@ def main() -> int:
     check("first-party-accessibility-menu", accessibility_preferences, "first-party accessibility preference control found; do not substitute an overlay script")
     accessibility_overlays = re.findall(r"accessibe|userway|accessiway|equalweb", lower, re.I)
     check("no-accessibility-overlay", not accessibility_overlays, f"third-party accessibility overlay references: {sorted(set(accessibility_overlays)) or 'none'}", "error")
+    has_public_lead_endpoint = bool(re.search(r"/api/(?:leads?|inquiries|contact)\b", lower, re.I))
+    if has_public_lead_endpoint:
+        runtime_corpus = "\n".join(
+            read_text(path) for path in files
+            if "worker" in {part.lower() for part in path.parts} or path.name.lower() in {"worker.ts", "worker.js"}
+        )
+        has_rate_binding = bool(re.search(r'(?m)["\']?ratelimits["\']?\s*[:=]|\[\[ratelimits\]\]', config_text, re.I))
+        has_rate_call = bool(re.search(r"\.limit\s*\(\s*\{\s*key\s*:", runtime_corpus, re.I))
+        isolate_counter = bool(re.search(r"new\s+Map\s*<[^>]*(?:hit|rate|request)|new\s+Map\s*\([^)]*\)", runtime_corpus, re.I))
+        check("lead-rate-limit-binding", has_rate_binding, "public lead endpoints require a Wrangler ratelimits binding", "error")
+        check("lead-rate-limit-runtime", has_rate_call, "public lead endpoints must invoke the platform limiter with an explicit key", "error")
+        check("no-isolate-rate-counter", not isolate_counter, "isolate-local Map counters are not production rate limiting", "error")
     if args.local_service:
         check("local-business-entity", "localbusiness" in lower or "organization" in lower, "verified Organization/LocalBusiness entity markup required for local-service mode")
         plan = root / "website-plan"
