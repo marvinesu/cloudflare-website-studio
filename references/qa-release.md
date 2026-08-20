@@ -72,6 +72,7 @@ Use [quality-scorecard.md](quality-scorecard.md) for the final scored decision. 
 - CORS and security headers match actual dependencies
 - Secrets exist in bindings, not source or client bundles
 - Forms show honest status and approved end-to-end delivery is observed
+- Every restricted Email Service recipient exists as a verified account-level destination; `scripts/verify_email_binding.py` passes for the release account and environment
 - Each route exposes one intentional primary lead flow; duplicate vendor/first-party forms and competing chat/form overlays are absent or explicitly justified
 - Qualification assistants are manual, use a consistent server-validated data model, require consent, preserve direct contact fallback, and pass modal/non-modal keyboard behavior
 - Turnstile-protected forms validate tokens with Siteverify on the server, check configured hostname/action, and reject expired, reused, or failed tokens
@@ -86,6 +87,7 @@ Use [quality-scorecard.md](quality-scorecard.md) for the final scored decision. 
 - Active deployment/version and Git SHA match intended release
 - The released version was built from the recorded commit, verified on a non-indexable preview, uploaded/tagged as that exact artifact, promoted with a known traffic allocation, and reverified after triggers/custom domains were synchronized
 - APIs and forms work on every served hostname
+- Email delivery evidence distinguishes Worker acceptance, Email Service send completion, and observed inbox placement; none is reported as stronger evidence than it is
 - CDN/cache differences are distinguished from deployment failure using asset hashes and response headers
 - Rollback target and procedure are recorded and executable
 - Rollback compatibility with current data schemas and bound resources is proven; gradual releases include skew tests and stop conditions when used

@@ -85,6 +85,8 @@ Prefer Cloudflare Email Service for simple first-party notification email when t
 5. Use a sender on the onboarded domain and a safe reply-to policy.
 6. Test an approved submission end to end and confirm inbox receipt.
 
+Before preview and production, run `python scripts/verify_email_binding.py <project-root> --account-id <cloudflare-account-id>` with the token supplied through `CLOUDFLARE_API_TOKEN`. The script checks fixed and allowed recipients against Cloudflare's verified account-level destination list. Treat failure as a release blocker; do not replace this account-state check with Wrangler dry-run output.
+
 Do not put addresses, API tokens, or SMTP credentials in client code. If Email Service is not ready, fail closed and keep the call fallback visible. Never treat a `200` from the form endpoint as proof of inbox delivery without observing the actual send result.
 
 ## Prevent competing overlays

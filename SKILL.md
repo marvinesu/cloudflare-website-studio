@@ -147,6 +147,14 @@ For urgent local services, keep `tel:` access persistent. Choose the smallest co
 
 For scheduled work, use a short server-validated form with explicit consent, abuse controls, honest success/failure messages, and verified delivery. Prefer a narrow Cloudflare Worker endpoint. Use Cloudflare Email Service `send_email` bindings only after the sender domain and destination are verified; otherwise keep the form disabled or fail closed rather than claiming delivery.
 
+When a Wrangler project declares `send_email`, verify the account-level destination state before preview and again before production:
+
+```bash
+python scripts/verify_email_binding.py <project-root> --account-id <cloudflare-account-id>
+```
+
+Provide the API token through `CLOUDFLARE_API_TOKEN`, never as a committed argument or file. Treat an unverified or missing destination as a release failure. A successful configuration check proves account eligibility, not inbox placement; complete one approved, clearly labeled end-to-end submission and observe the destination inbox before claiming delivery.
+
 Keep one coherent lead flow per surface. Do not stack a vendor form, first-party form, and chatbot on the same page unless each has a documented distinct purpose. A qualification assistant should be manual, three short steps or fewer where practical, use the same server-validated endpoint as the primary form, disclose its limits, preserve a direct contact alternative, and never auto-open or steal focus.
 
 ## Enforce a professional motion pass
@@ -176,6 +184,8 @@ python scripts/site_preflight.py <project-root>
 ```
 
 Then run the project's format, lint, typecheck, tests, and production build. Inspect generated output and the rendered site. Test desktop, breakpoint boundaries, true narrow mobile, keyboard, touch, zoom, reduced motion, no-JavaScript visibility where relevant, forms, failures, redirects, 404, metadata, schema, sitemap, robots, and canonical behavior.
+
+If `send_email` exists, run `scripts/verify_email_binding.py` with a read-capable Cloudflare token in addition to the portable site audit. Record the checked destination, verification timestamp, approved delivery test, and inbox-observation result without storing the token or personal lead data.
 
 For local-service projects, run `python scripts/site_preflight.py <project-root> --local-service`. Use `--strict` when every finding must block CI. Score the completed implementation with [quality-scorecard.md](references/quality-scorecard.md); a blocking defect fails release regardless of the total.
 

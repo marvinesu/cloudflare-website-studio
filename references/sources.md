@@ -4,6 +4,8 @@ This skill synthesizes upstream techniques in original language. It does not ven
 
 Research snapshot: 2026-08-18.
 
+Platform verification update: 2026-08-19.
+
 | Source | Commit reviewed | License | Extracted responsibility |
 | --- | --- | --- | --- |
 | [marvinesu/wordpress-cloudflare-migration-skill](https://github.com/marvinesu/wordpress-cloudflare-migration-skill) | `0fa469a983d62eff734ff08e6b9ad8e91a59037c` | MIT | Migration gates, URL/claim/feature contracts, static-first Worker architecture, cutover and production evidence |
@@ -19,6 +21,8 @@ Research snapshot: 2026-08-18.
 | [W3C Focus Not Obscured](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum) | guidance reviewed 2026-08-18 | W3C document license | Sticky, floating, notification, and dialog collision testing for keyboard focus |
 
 Current platform guidance was checked against official Cloudflare Workers/Pages documentation, Google Search Central, Bing Webmaster Guidelines/IndexNow, and OpenAI publisher crawler guidance. Links are kept in the relevant references.
+
+The Email Service verification gate and `verify_email_binding.py` follow Cloudflare's current send-binding restrictions and Email Routing Addresses API. The script is an original standard-library implementation and does not vendor Cloudflare SDK code.
 
 Resolve conflicts in this order:
 

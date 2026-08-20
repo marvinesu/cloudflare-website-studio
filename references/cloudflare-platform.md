@@ -85,6 +85,7 @@ Declare bindings per environment. Bindings and secrets are not automatically inh
 - Declare required secret names when supported; never store values in examples, screenshots, logs, or migration exports.
 - Use least-privilege Cloudflare API tokens in CI.
 - Verify staging and production bindings separately.
+- For Email Service, inspect every `destination_address` and `allowed_destination_addresses` entry against the account-level verified destination list before preview and production. Run `python scripts/verify_email_binding.py <project-root> --account-id <id>` with `CLOUDFLARE_API_TOKEN`; do not infer verification from a successful Wrangler upload or dry run.
 - Decide and document fail-open versus fail-closed behavior for every external dependency. Contact, authentication, payment, and privileged-write paths normally fail closed; noncritical analytics normally fail open.
 - Redact credentials, form bodies, email addresses, phone numbers, tokens, and other personal data from logs. Log stable request/deployment identifiers and outcome categories instead.
 
@@ -108,7 +109,7 @@ Do not enable cross-version caching without an explicit invalidation plan. Durin
 
 1. Run Wrangler schema/type checks, local runtime, tests, and a deployment dry run when available.
 2. Deploy to a branch/preview URL and confirm previews are not indexable.
-3. Verify routes, bindings, headers, logs, and actual edge responses.
+3. Verify routes, bindings, headers, logs, and actual edge responses. For `send_email`, separately verify the destination through the Email Routing Addresses API and observe one approved, clearly labeled end-to-end delivery. A Wrangler binding summary and an API `200` are not inbox-placement evidence.
 4. Record deployment/version ID, Git SHA, custom domains/routes, binding/schema state, and a known-good rollback target.
 5. For material Worker changes, prefer a monitored gradual deployment when the account and architecture support it. Define traffic steps, observation windows, stop conditions, and ownership before starting. Test version skew across HTML/assets and service bindings; use version affinity or version overrides when consistency requires them.
 6. Release production and re-run the same checks on the canonical URL.
@@ -134,6 +135,8 @@ Never deploy from a partial `dist` directory. After any interrupted or concurren
 - https://developers.cloudflare.com/workers/wrangler/environments/
 - https://developers.cloudflare.com/workers/configuration/secrets/
 - https://developers.cloudflare.com/workers/observability/
+- https://developers.cloudflare.com/email-service/configuration/send-bindings/
+- https://developers.cloudflare.com/api/resources/email_routing/subresources/addresses/methods/list/
 - https://developers.cloudflare.com/workers/versions-and-deployments/gradual-deployments/
 - https://developers.cloudflare.com/workers/versions-and-deployments/gradual-deployments/version-affinity/
 - https://developers.cloudflare.com/workers/versions-and-deployments/rollbacks/
