@@ -123,6 +123,8 @@ Measure instead of promising: Google Search Console generative-AI reporting when
 - Verify public pages are accessible to the search/AI crawlers the owner intends to allow; test robots.txt and Cloudflare bot/WAF behavior separately from browser access.
 - Track AI referrals when identifiable, but do not promise inclusion, ranking, citation, or generated-answer placement.
 
+Pre-release checks do not replace the live-domain review. Once the exact release is on the main domain, run [post-launch-seo.md](post-launch-seo.md) and record the canonical-host evidence before declaring production complete.
+
 ## Official references
 
 - https://developers.google.com/search/docs/fundamentals/seo-starter-guide
