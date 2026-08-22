@@ -82,6 +82,7 @@ Use [quality-scorecard.md](quality-scorecard.md) for the final scored decision. 
 ## Production
 
 - Canonical homepage and representative internal routes return intended content and assets
+- `website-plan/post-launch-seo.md` records a passed canonical-domain crawl and live SEO review for the active release; preview or local evidence is not substituted
 - Apex/`www`, TLS, redirects, headers, and cache behavior are correct
 - Active deployment/version and Git SHA match intended release
 - The released version was built from the recorded commit, verified on a non-indexable preview, uploaded/tagged as that exact artifact, promoted with a known traffic allocation, and reverified after triggers/custom domains were synchronized
@@ -90,4 +91,4 @@ Use [quality-scorecard.md](quality-scorecard.md) for the final scored decision. 
 - Rollback target and procedure are recorded and executable
 - Rollback compatibility with current data schemas and bound resources is proven; gradual releases include skew tests and stop conditions when used
 
-Do not declare completion from upload logs, a single screenshot, a passing automated accessibility scan, a `200` form response, or one CDN point of presence.
+Do not declare completion from upload logs, a single screenshot, a passing automated accessibility scan, a `200` form response, one CDN point of presence, or preview-only SEO results.

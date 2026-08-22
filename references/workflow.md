@@ -61,5 +61,6 @@ Run at least two distinct reviews: one for user/content/design quality and one f
 - Test locally through the real Pages/Workers runtime when possible.
 - Deploy to a preview before production; keep WordPress or the prior deployment available for rollback.
 - Verify production from the canonical domain and record the active version, routes, limitations, and rollback.
+- After the main domain serves the intended release, run [post-launch-seo.md](post-launch-seo.md), fix material findings, and rerun affected checks on the canonical host.
 
-**Pass:** preview evidence, production evidence, active version/SHA, domain behavior, monitoring, and rollback are recorded. Upload success alone fails this gate.
+**Pass:** preview evidence, production evidence, active version/SHA, domain behavior, the canonical-domain SEO review, monitoring, and rollback are recorded. Upload success or preview-only SEO evidence fails this gate.

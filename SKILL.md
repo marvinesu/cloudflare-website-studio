@@ -29,6 +29,7 @@ website-plan/
   motion-plan.md
   motion-license-ledger.md
   cloudflare-release.md
+  post-launch-seo.md
   qa-report.md
 ```
 
@@ -43,11 +44,13 @@ Read only the references needed for the task, but always read every reference ma
 | Create or redesign | [visual-design.md](references/visual-design.md), [design-assets.md](references/design-assets.md), [motion.md](references/motion.md), [accessibility.md](references/accessibility.md), [content-seo.md](references/content-seo.md), [conversion-systems.md](references/conversion-systems.md), [qa-release.md](references/qa-release.md) |
 | Improve an existing site | Same as create, plus [workflow.md](references/workflow.md) |
 | WordPress migration | [migration.md](references/migration.md), [cloudflare-platform.md](references/cloudflare-platform.md), [content-seo.md](references/content-seo.md), [accessibility.md](references/accessibility.md), [qa-release.md](references/qa-release.md) |
-| Cloudflare setup or deployment | [cloudflare-platform.md](references/cloudflare-platform.md), [accessibility.md](references/accessibility.md), [qa-release.md](references/qa-release.md) |
-| Copy or SEO work | [content-seo.md](references/content-seo.md) |
+| Cloudflare setup or deployment | [cloudflare-platform.md](references/cloudflare-platform.md), [post-launch-seo.md](references/post-launch-seo.md), [accessibility.md](references/accessibility.md), [qa-release.md](references/qa-release.md) |
+| Copy or SEO work | [content-seo.md](references/content-seo.md), [post-launch-seo.md](references/post-launch-seo.md) |
 | Animation work | [motion.md](references/motion.md) |
 | Accessibility work | [accessibility.md](references/accessibility.md), [qa-release.md](references/qa-release.md) |
 | Local-service business | [local-service-growth.md](references/local-service-growth.md), [content-seo.md](references/content-seo.md), [conversion-systems.md](references/conversion-systems.md), [visual-design.md](references/visual-design.md), [design-assets.md](references/design-assets.md), [motion.md](references/motion.md), [accessibility.md](references/accessibility.md), [qa-release.md](references/qa-release.md) |
+
+Whenever the scope includes a release to the main canonical domain, read [post-launch-seo.md](references/post-launch-seo.md) regardless of the selected mode.
 
 Consult [sources.md](references/sources.md) when updating this skill or resolving provenance.
 
@@ -129,7 +132,7 @@ Use icons as a coherent wayfinding layer, not decoration. Choose one family and 
 8. Semantic accessibility, keyboard/focus behavior, form announcements, and first-party preference controls
 9. Professional motion system and signature interaction with pause/reduced-motion behavior
 10. Accessibility, resilience, performance, and SEO validation
-11. Preview deployment, production cutover, verification, and rollback evidence
+11. Preview deployment, production cutover, canonical-domain SEO review, verification, and rollback evidence
 
 Keep core copy and navigation visible without animation JavaScript. Enhance progressively.
 
@@ -180,6 +183,8 @@ Then run the project's format, lint, typecheck, tests, and production build. Ins
 For local-service projects, run `python scripts/site_preflight.py <project-root> --local-service`. Use `--strict` when every finding must block CI. Score the completed implementation with [quality-scorecard.md](references/quality-scorecard.md); a blocking defect fails release regardless of the total.
 
 Deploy the exact committed build to a non-indexable preview first. Verify the actual Cloudflare runtime, not only a framework dev server. If a per-version preview alias is stale, blocked, or client-cached, use an isolated preview Worker with no production route and repeat the full check there. Production completion requires the canonical URL, representative internal routes, critical assets, API failures, real form delivery when approved, domain policy, security headers, logs/errors, active deployment/version, Git SHA, and rollback target.
+
+After the exact release is reachable on the main canonical domain, run the mandatory live SEO review in [post-launch-seo.md](references/post-launch-seo.md). This is a separate gate from local or preview SEO QA. Crawl the canonical host, verify redirects/indexability/canonicals/sitemap/robots/schema/internal links and crawler access, run mobile and desktop performance checks, remove preview-host leakage, fix material findings, and rerun the affected checks. Record dated evidence in `website-plan/post-launch-seo.md` and link it from `website-plan/cloudflare-release.md` and `website-plan/qa-report.md`. Do not call production complete while this gate is unrun, failed, or blocked.
 
 ## Report precisely
 

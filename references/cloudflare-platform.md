@@ -111,7 +111,7 @@ Do not enable cross-version caching without an explicit invalidation plan. Durin
 3. Verify routes, bindings, headers, logs, and actual edge responses.
 4. Record deployment/version ID, Git SHA, custom domains/routes, binding/schema state, and a known-good rollback target.
 5. For material Worker changes, prefer a monitored gradual deployment when the account and architecture support it. Define traffic steps, observation windows, stop conditions, and ownership before starting. Test version skew across HTML/assets and service bindings; use version affinity or version overrides when consistency requires them.
-6. Release production and re-run the same checks on the canonical URL.
+6. Release production, re-run the same checks on the canonical URL, and complete the separate live SEO gate in [post-launch-seo.md](post-launch-seo.md).
 7. Inspect Workers Logs or `wrangler tail` for exceptions and sample deliberately. Never emit secrets or raw personal form data. Correlate failures to Worker version when multiple versions are live.
 8. Roll back immediately when critical routes, forms, security, or canonical behavior fail. A code rollback does not roll back D1 migrations or recreate deleted/changed KV, R2, Queue, or Durable Object resources; prove data and binding compatibility before declaring the rollback executable.
 
