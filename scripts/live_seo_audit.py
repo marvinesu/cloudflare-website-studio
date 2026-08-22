@@ -35,32 +35,50 @@ class PageParser(HTMLParser):
         self.title = ""
         self.description = ""
         self.robots = ""
-        self.canonical = ""
+        self.canonicals: list[str] = []
+        self.html_lang = ""
+        self.viewport = ""
         self.h1_count = 0
         self.links: list[str] = []
+        self.anchors: list[tuple[str, str]] = []
+        self.images_without_alt = 0
         self.jsonld: list[str] = []
         self._capture_title = False
         self._capture_jsonld = False
         self._buffer: list[str] = []
+        self._anchor_href: str | None = None
+        self._anchor_name: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         values = {key.lower(): value or "" for key, value in attrs}
+        names = {key.lower() for key, _ in attrs}
         tag = tag.lower()
-        if tag == "title":
+        if tag == "html":
+            self.html_lang = values.get("lang", "")
+        elif tag == "title":
             self._capture_title = True
             self._buffer = []
         elif tag == "h1":
             self.h1_count += 1
         elif tag == "a" and values.get("href"):
             self.links.append(values["href"])
+            self._anchor_href = values["href"]
+            self._anchor_name = [values.get("aria-label", ""), values.get("title", "")]
+        elif tag == "img":
+            if "alt" not in names:
+                self.images_without_alt += 1
+            if self._anchor_href is not None:
+                self._anchor_name.append(values.get("alt", ""))
         elif tag == "link" and "canonical" in values.get("rel", "").lower():
-            self.canonical = values.get("href", "")
+            self.canonicals.append(values.get("href", ""))
         elif tag == "meta":
             name = values.get("name", "").lower()
             if name == "description":
                 self.description = values.get("content", "")
             elif name == "robots":
                 self.robots = values.get("content", "")
+            elif name == "viewport":
+                self.viewport = values.get("content", "")
         elif tag == "script" and values.get("type", "").lower() == "application/ld+json":
             self._capture_jsonld = True
             self._buffer = []
@@ -75,10 +93,16 @@ class PageParser(HTMLParser):
             self.jsonld.append("".join(self._buffer).strip())
             self._capture_jsonld = False
             self._buffer = []
+        elif tag == "a" and self._anchor_href is not None:
+            self.anchors.append((self._anchor_href, " ".join(self._anchor_name).strip()))
+            self._anchor_href = None
+            self._anchor_name = []
 
     def handle_data(self, data: str) -> None:
         if self._capture_title or self._capture_jsonld:
             self._buffer.append(data)
+        if self._anchor_href is not None:
+            self._anchor_name.append(data)
 
 
 def fetch(url: str) -> tuple[int, str, str, dict[str, str]]:
@@ -146,13 +170,22 @@ def run(origin: str, sitemap: str, max_pages: int) -> dict:
         findings.append(Finding("error", "robots-status", robots_url, f"returned {robots_status}"))
     elif re.search(r"User-agent:\s*\*[\s\S]{0,300}?Disallow:\s*/(?:\s|$)", robots_body, re.I):
         findings.append(Finding("error", "robots-block", robots_url, "blanket production crawl block detected"))
+    else:
+        declared_sitemaps = [match.strip() for match in re.findall(r"^Sitemap:\s*(\S+)", robots_body, re.I | re.M)]
+        if sitemap not in declared_sitemaps:
+            findings.append(Finding("warning", "robots-sitemap", robots_url, f"does not declare {sitemap}"))
 
-    urls = list(dict.fromkeys(sitemap_urls(sitemap)))[:max_pages]
+    sitemap_entries = sitemap_urls(sitemap)
+    if len(sitemap_entries) != len(set(sitemap_entries)):
+        findings.append(Finding("warning", "sitemap-duplicates", sitemap, "duplicate URL entries detected"))
+    urls = list(dict.fromkeys(sitemap_entries))[:max_pages]
     pages: dict[str, PageParser] = {}
     titles: defaultdict[str, list[str]] = defaultdict(list)
     descriptions: defaultdict[str, list[str]] = defaultdict(list)
 
     for requested in urls:
+        if urlparse(requested).netloc.lower() != host:
+            findings.append(Finding("error", "sitemap-host", requested, f"does not use canonical host {host}"))
         status, final_url, body, headers = fetch(requested)
         canonical_requested = normalized_page_url(requested)
         if status != 200:
@@ -166,6 +199,10 @@ def run(origin: str, sitemap: str, max_pages: int) -> dict:
         parser = PageParser()
         parser.feed(body)
         pages[canonical_requested] = parser
+        if not parser.html_lang:
+            findings.append(Finding("warning", "html-lang", requested, "html lang attribute is missing"))
+        if not parser.viewport:
+            findings.append(Finding("warning", "mobile-viewport", requested, "viewport meta tag is missing"))
         if parser.h1_count != 1:
             findings.append(Finding("error", "h1-count", requested, f"found {parser.h1_count}"))
         if not parser.title:
@@ -176,10 +213,12 @@ def run(origin: str, sitemap: str, max_pages: int) -> dict:
             findings.append(Finding("error", "description-missing", requested, "meta description is empty"))
         else:
             descriptions[parser.description].append(requested)
-        if not parser.canonical:
+        if not parser.canonicals:
             findings.append(Finding("error", "canonical-missing", requested, "canonical link is absent"))
         else:
-            canonical = normalized_page_url(urljoin(requested, parser.canonical))
+            if len(parser.canonicals) != 1:
+                findings.append(Finding("error", "canonical-count", requested, f"found {len(parser.canonicals)} canonical links"))
+            canonical = normalized_page_url(urljoin(requested, parser.canonicals[0]))
             if canonical != canonical_requested:
                 findings.append(Finding("error", "canonical-mismatch", requested, f"declares {canonical}"))
             if urlparse(canonical).netloc.lower() != host:
@@ -188,6 +227,11 @@ def run(origin: str, sitemap: str, max_pages: int) -> dict:
             findings.append(Finding("error", "meta-noindex", requested, parser.robots))
         if PREVIEW_HOST.search(body):
             findings.append(Finding("error", "preview-host-leak", requested, "preview or retired host appears in HTML"))
+        if parser.images_without_alt:
+            findings.append(Finding("warning", "image-alt-missing", requested, f"{parser.images_without_alt} image(s) omit the alt attribute"))
+        unnamed_links = [href for href, name in parser.anchors if href and not name and not href.startswith(("#", "javascript:"))]
+        if unnamed_links:
+            findings.append(Finding("warning", "link-name-missing", requested, f"{len(unnamed_links)} crawlable link(s) have no text or accessible label"))
 
         for raw in parser.jsonld:
             try:

@@ -1,5 +1,7 @@
 # Human content and SEO playbook
 
+Always apply [google-search-foundations.md](google-search-foundations.md). Use [google-search-technical.md](google-search-technical.md) for crawl/index architecture and [google-search-appearance.md](google-search-appearance.md) for metadata, media, and structured data. Route specialized questions through [google-search-central-inventory.csv](google-search-central-inventory.csv) and open the current official page before implementing a conditional Google feature.
+
 For any local-service business, also read [local-service-growth.md](local-service-growth.md) and run its research, location-page, internal-link, and AI-discovery workflow before finalizing pages.
 
 ## Start with evidence

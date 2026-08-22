@@ -1,5 +1,7 @@
 # Canonical-domain SEO review
 
+Apply [google-search-technical.md](google-search-technical.md), [google-search-appearance.md](google-search-appearance.md), and [google-search-monitoring.md](google-search-monitoring.md) during this gate. Link the final result from `website-plan/google-search-audit.md` as well as the release and QA records.
+
 Run this gate only after the exact approved release is reachable on the main custom domain. Local builds and preview hosts remain necessary, but they cannot pass this gate because DNS, redirects, headers, cache, bot controls, and canonical-host behavior may differ in production.
 
 Create or update `website-plan/post-launch-seo.md`. Record the review timestamp and timezone, canonical origin, tested apex/`www` variants, Git SHA, Cloudflare deployment/version, sitemap URL, tools used, evidence links, findings, fixes, rerun results, remaining risks, owner, and one status: `passed`, `failed`, `blocked`, or `not applicable`.

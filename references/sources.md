@@ -2,7 +2,7 @@
 
 This skill synthesizes upstream techniques in original language. It does not vendor upstream code or claim ownership of their guidance.
 
-Research snapshot: 2026-08-18.
+Research snapshot: 2026-08-21.
 
 | Source | Commit reviewed | License | Extracted responsibility |
 | --- | --- | --- | --- |
@@ -17,6 +17,7 @@ Research snapshot: 2026-08-18.
 | [WAI-ARIA APG modal dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) | guidance reviewed 2026-08-18 | W3C document license | Dialog naming, initial focus, focus containment, Escape, close control, and focus return |
 | [W3C Pause, Stop, Hide](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide) | guidance reviewed 2026-08-18 | W3C document license | Persistent pause/stop/hide mechanism for qualifying automatic motion and updates |
 | [W3C Focus Not Obscured](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum) | guidance reviewed 2026-08-18 | W3C document license | Sticky, floating, notification, and dialog collision testing for keyboard focus |
+| [Google Search Central documentation](https://developers.google.com/search/docs) | 154 canonical left-navigation pages fetched with zero HTTP failures on 2026-08-21 | CC BY 4.0 for documentation; summaries here are original | Search Essentials, people-first and generative-AI guidance, spam policy, crawling/indexing, search appearance, structured-data routing, monitoring, security, ecommerce, and international sites |
 
 Current platform guidance was checked against official Cloudflare Workers/Pages documentation, Google Search Central, Bing Webmaster Guidelines/IndexNow, and OpenAI publisher crawler guidance. Links are kept in the relevant references.
 

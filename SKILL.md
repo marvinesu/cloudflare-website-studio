@@ -29,6 +29,7 @@ website-plan/
   motion-plan.md
   motion-license-ledger.md
   cloudflare-release.md
+  google-search-audit.md
   post-launch-seo.md
   qa-report.md
 ```
@@ -46,11 +47,16 @@ Read only the references needed for the task, but always read every reference ma
 | WordPress migration | [migration.md](references/migration.md), [cloudflare-platform.md](references/cloudflare-platform.md), [content-seo.md](references/content-seo.md), [accessibility.md](references/accessibility.md), [qa-release.md](references/qa-release.md) |
 | Cloudflare setup or deployment | [cloudflare-platform.md](references/cloudflare-platform.md), [post-launch-seo.md](references/post-launch-seo.md), [accessibility.md](references/accessibility.md), [qa-release.md](references/qa-release.md) |
 | Copy or SEO work | [content-seo.md](references/content-seo.md), [post-launch-seo.md](references/post-launch-seo.md) |
+| Review or audit | Select the references for the audited areas; always include [qa-release.md](references/qa-release.md), and include [content-seo.md](references/content-seo.md) plus [post-launch-seo.md](references/post-launch-seo.md) for a public search audit |
 | Animation work | [motion.md](references/motion.md) |
 | Accessibility work | [accessibility.md](references/accessibility.md), [qa-release.md](references/qa-release.md) |
 | Local-service business | [local-service-growth.md](references/local-service-growth.md), [content-seo.md](references/content-seo.md), [conversion-systems.md](references/conversion-systems.md), [visual-design.md](references/visual-design.md), [design-assets.md](references/design-assets.md), [motion.md](references/motion.md), [accessibility.md](references/accessibility.md), [qa-release.md](references/qa-release.md) |
 
 Whenever the scope includes a release to the main canonical domain, read [post-launch-seo.md](references/post-launch-seo.md) regardless of the selected mode.
+
+For every public indexable website, read [google-search-foundations.md](references/google-search-foundations.md). Read [google-search-technical.md](references/google-search-technical.md) when changing routes, rendering, links, canonicals, sitemaps, robots, redirects, JavaScript, or hosting. Read [google-search-appearance.md](references/google-search-appearance.md) when changing titles, snippets, images/video, business details, or structured data. Read [google-search-monitoring.md](references/google-search-monitoring.md) for production monitoring, traffic diagnosis, ecommerce, international, security, or abuse work.
+
+The complete reviewed Google Search Central left-navigation ledger is [google-search-central-inventory.csv](references/google-search-central-inventory.csv). Search the ledger for a conditional feature, open the current official page, and apply that page's current requirements before implementation. Refresh the ledger with `python scripts/google_search_docs_inventory.py --output references/google-search-central-inventory.csv --strict` when the user requests a documentation-wide review or when a time-sensitive Google feature may have changed.
 
 Consult [sources.md](references/sources.md) when updating this skill or resolving provenance.
 
@@ -88,6 +94,12 @@ Before finalizing the information architecture or copy:
 6. Reject thin programmatic location pages and unsupported local claims.
 
 Research findings are evidence, not permission to copy competitors. Write original content from verified business knowledge and useful synthesis.
+
+## Run the Google Search applicability gate
+
+Create `website-plan/google-search-audit.md` for every public site. Record the canonical origin, intended indexable route families, Search Console/sitemap state, and one status for each applicable area: Search Essentials, people-first content, spam policies, crawl/index eligibility, link graph, canonicals/duplicates, robots/sitemaps, JavaScript/mobile parity, titles/snippets, images/video, page experience, structured data, local/ecommerce/international features, monitoring, and security.
+
+Mark specialized guidance `not applicable` with a reason; do not silently skip it. Link each material finding to the current official source URL selected from the inventory. Separate eligibility requirements, recommended improvements, conditional rich-result requirements, third-party-tool findings, and owner/account actions. A Google recommendation is not automatically a release blocker, and technical eligibility never becomes a promise of indexing, ranking, traffic, AI visibility, or leads.
 
 ## Make architecture decisions deliberately
 
