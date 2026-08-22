@@ -186,6 +186,8 @@ Deploy the exact committed build to a non-indexable preview first. Verify the ac
 
 After the exact release is reachable on the main canonical domain, run the mandatory live SEO review in [post-launch-seo.md](references/post-launch-seo.md). This is a separate gate from local or preview SEO QA. Crawl the canonical host, verify redirects/indexability/canonicals/sitemap/robots/schema/internal links and crawler access, run mobile and desktop performance checks, remove preview-host leakage, fix material findings, and rerun the affected checks. Record dated evidence in `website-plan/post-launch-seo.md` and link it from `website-plan/cloudflare-release.md` and `website-plan/qa-report.md`. Do not call production complete while this gate is unrun, failed, or blocked.
 
+For the live canonical crawl, run `python scripts/live_seo_audit.py https://example.com --strict`. When the owner supplies a third-party SEO report, reproduce every reported URL-level issue, fix the root cause, and record before/after counts; never suppress a valid finding merely to improve the tool score.
+
 ## Report precisely
 
 State what changed, the design and motion direction, routes and files affected, validation commands and results, preview/production status, known limitations, and rollback. Distinguish "built," "locally tested," "preview deployed," "production deployed," and "production verified."

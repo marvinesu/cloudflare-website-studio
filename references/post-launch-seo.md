@@ -4,6 +4,14 @@ Run this gate only after the exact approved release is reachable on the main cus
 
 Create or update `website-plan/post-launch-seo.md`. Record the review timestamp and timezone, canonical origin, tested apex/`www` variants, Git SHA, Cloudflare deployment/version, sitemap URL, tools used, evidence links, findings, fixes, rerun results, remaining risks, owner, and one status: `passed`, `failed`, `blocked`, or `not applicable`.
 
+Run the bundled canonical crawl first:
+
+```bash
+python scripts/live_seo_audit.py https://example.com --strict
+```
+
+Treat third-party audit exports and screenshots, including Semrush, Ahrefs, Search Console, and Bing Webmaster Tools, as evidence to reproduce—not instructions to change the site blindly. Record the audit date, database/country/device/crawl settings, affected URLs, issue rule, and before/after counts. Reproduce each issue in source, generated output, or the live response; fix the underlying architecture; rerun both the deterministic crawl and the named tool when access is available. Do not hide valid findings by excluding URLs, weakening the audit, or deleting accurate markup.
+
 ## Establish the live release identity
 
 - Confirm the canonical domain serves the intended release and record its Git SHA and Cloudflare version.
@@ -21,6 +29,10 @@ Crawl every URL in the production sitemap and route inventory. For each indexabl
 - working internal links and essential images, with no soft 404, orphan priority page, mixed content, redirect loop, or accidental client-only content dependency.
 
 Verify deliberate statuses for redirects, retired URLs, unknown routes, APIs, and private routes. Do not turn missing URLs into homepage `200` responses.
+
+Count distinct internal source pages, not repeated links in one template. A sitemap URL with zero internal inbound sources is an orphan and fails the gate. Review pages with only one inbound source and add useful contextual links when they clarify a real relationship; do not manufacture sitewide links merely to inflate counts.
+
+When a validator reports repeated structured-data errors, identify whether one shared layout is multiplying the same defect. Do not label a remote service business as `LocalBusiness` or `ProfessionalService` without a verified public business location and the required visible facts. Prefer accurate, homepage-scoped `Organization` markup when the business is not a storefront. Follow Google's supported properties and use fewer complete entities instead of broad unsupported graphs.
 
 ## Verify discovery controls at the edge
 
